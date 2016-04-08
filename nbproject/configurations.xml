@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="games">
+        <in>abcrainwidget.cpp</in>
+        <in>charball.cpp</in>
+      </df>
+      <df name="sql">
+        <in>chartablesql.cpp</in>
+        <in>keyboardsql.cpp</in>
+        <in>lessontablesql.cpp</in>
+        <in>startsql.cpp</in>
+        <in>trainingsql.cpp</in>
+      </df>
+      <df name="widget">
+        <in>checkversion.cpp</in>
+        <in>companylogo.cpp</in>
+        <in>downloaddialog.cpp</in>
+        <in>errormessage.cpp</in>
+        <in>evaluationwidget.cpp</in>
+        <in>fingerwidget.cpp</in>
+        <in>helpbrowser.cpp</in>
+        <in>illustrationdialog.cpp</in>
+        <in>illustrationimage.cpp</in>
+        <in>keyboard.cpp</in>
+        <in>lessondialog.cpp</in>
+        <in>lessonprintdialog.cpp</in>
+        <in>lessonresult.cpp</in>
+        <in>licensedialog.cpp</in>
+        <in>mainwindow.cpp</in>
+        <in>numpad.cpp</in>
+        <in>progressionwidget.cpp</in>
+        <in>regexpdialog.cpp</in>
+        <in>settingsdialog.cpp</in>
+        <in>settingspages.cpp</in>
+        <in>startwidget.cpp</in>
+        <in>statusbar.cpp</in>
+        <in>tickerboard.cpp</in>
+        <in>trainingwidget.cpp</in>
+        <in>txtmessagedialog.cpp</in>
+        <in>updatedialog.cpp</in>
+      </df>
+      <in>main.cpp</in>
+      <in>moc_abcrainwidget.cpp</in>
+      <in>moc_charball.cpp</in>
+      <in>moc_chartablesql.cpp</in>
+      <in>moc_checkversion.cpp</in>
+      <in>moc_downloaddialog.cpp</in>
+      <in>moc_errormessage.cpp</in>
+      <in>moc_evaluationwidget.cpp</in>
+      <in>moc_fingerwidget.cpp</in>
+      <in>moc_helpbrowser.cpp</in>
+      <in>moc_illustrationdialog.cpp</in>
+      <in>moc_keyboard.cpp</in>
+      <in>moc_lessondialog.cpp</in>
+      <in>moc_lessonprintdialog.cpp</in>
+      <in>moc_lessonresult.cpp</in>
+      <in>moc_lessontablesql.cpp</in>
+      <in>moc_licensedialog.cpp</in>
+      <in>moc_mainwindow.cpp</in>
+      <in>moc_numpad.cpp</in>
+      <in>moc_progressionwidget.cpp</in>
+      <in>moc_regexpdialog.cpp</in>
+      <in>moc_settingsdialog.cpp</in>
+      <in>moc_settingspages.cpp</in>
+      <in>moc_startwidget.cpp</in>
+      <in>moc_statusbar.cpp</in>
+      <in>moc_tickerboard.cpp</in>
+      <in>moc_trainingwidget.cpp</in>
+      <in>moc_txtmessagedialog.cpp</in>
+      <in>moc_updatedialog.cpp</in>
+      <in>qrc_tipp10.cpp</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+      <itemPath>tipp10.pro</itemPath>
+    </logicalFolder>
+    <itemPath>.gitignore</itemPath>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0"
+                 commonFlags="-O2 -fstack-protector-strong -m64 -mtune=generic -std=gnu++98 -O2"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath>tipp10</executablePath>
+          <ccTool>
+            <incDir>
+              <pElem>/usr/lib64/qt4/mkspecs/linux-g++</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/QtCore</pElem>
+              <pElem>/usr/include/QtNetwork</pElem>
+              <pElem>/usr/include/QtGui</pElem>
+              <pElem>/usr/include/QtSql</pElem>
+              <pElem>/usr/include</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>QT_CORE_LIB</Elem>
+              <Elem>QT_GUI_LIB</Elem>
+              <Elem>QT_NETWORK_LIB</Elem>
+              <Elem>QT_NO_DEBUG</Elem>
+              <Elem>QT_SHARED</Elem>
+              <Elem>QT_SQL_LIB</Elem>
+              <Elem>_REENTRANT</Elem>
+            </preprocessorList>
+          </ccTool>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path=".gitignore" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="games/abcrainwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="games/charball.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_abcrainwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_charball.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_chartablesql.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_checkversion.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_downloaddialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_errormessage.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_evaluationwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_fingerwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_helpbrowser.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_illustrationdialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_keyboard.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_lessondialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_lessonprintdialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_lessonresult.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_lessontablesql.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_licensedialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_mainwindow.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_numpad.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_progressionwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_regexpdialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_settingsdialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_settingspages.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_startwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_statusbar.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_tickerboard.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_trainingwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_txtmessagedialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="moc_updatedialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="qrc_tipp10.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="sql/chartablesql.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="sql/keyboardsql.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="sql/lessontablesql.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="sql/startsql.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="sql/trainingsql.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/checkversion.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/companylogo.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/downloaddialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/errormessage.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/evaluationwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/fingerwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/helpbrowser.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/illustrationdialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/illustrationimage.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/keyboard.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/lessondialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/lessonprintdialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/lessonresult.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/licensedialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/mainwindow.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/numpad.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/progressionwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/regexpdialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/settingsdialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/settingspages.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/startwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/statusbar.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/tickerboard.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/trainingwidget.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/txtmessagedialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="widget/updatedialog.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

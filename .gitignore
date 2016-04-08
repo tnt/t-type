@@ -1,0 +1,6 @@
+*.o
+*.core
+moc_*.cpp
+qrc_tipp10.cpp
+tipp10
+tipp10.pro
