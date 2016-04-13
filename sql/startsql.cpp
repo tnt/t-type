@@ -124,6 +124,7 @@ int StartSql::fillOpenList(QListWidget *listOpen, QList<QString> *arrayOpen,
     QString lessonId;
     QString lessonLength;
     QIcon openIcon;
+    int timesPracticed;
     int lessonCounter = 0;
     QString themeAll = "WHERE open_list.open_theme = " + themeId + " ";
     if (themeId == "0" || themeId == "") {
@@ -151,15 +152,16 @@ int StartSql::fillOpenList(QListWidget *listOpen, QList<QString> *arrayOpen,
         // Maybe a additional description
         lessonDescription = query.value(2).toString();
         // Show different icons depending on number of lessons done
-        if (query.value(3).toInt() > 2) {
+        timesPracticed = query.value(3).toInt();
+        if (timesPracticed > 2) {
             // Lesson done multiple
             openIcon = QIcon(":/img/lesson_done_three.png");
         } else {
-            if (query.value(3).toInt() == 2) {
+            if (timesPracticed == 2) {
                 // Lesson done multiple
                 openIcon = QIcon(":/img/lesson_done_two.png");
             } else {
-                if (query.value(3).toInt() == 1) {
+                if (timesPracticed == 1) {
                     // Lesson done once
                     openIcon = QIcon(":/img/lesson_done_one.png");
                 } else {
@@ -168,10 +170,10 @@ int StartSql::fillOpenList(QListWidget *listOpen, QList<QString> *arrayOpen,
                 }
             }
         }
-        lessonLength = query.value(4).toString();
+        lessonLength =  QString::number(timesPracticed == 0 ? query.value(4).toInt() : query.value(4).toInt() / timesPracticed);
         // Add Item to the list
         currentItem = new QListWidgetItem(openIcon, lessonName, listOpen);
-        currentItem->setToolTip(lessonDescription + " (" + lessonLength + " Zeichen)");
+        currentItem->setToolTip(QString(lessonDescription + " ( %1 Zeichen)").arg(lessonLength));
         arrayOpen->append(lessonId);
         lessonCounter++;
     }
@@ -191,6 +193,7 @@ int StartSql::fillOwnList(QListWidget *listOwn, QList<QString> *arrayOwn) {
     QListWidgetItem *currentItem;
     QString lessonId;
     QIcon ownIcon;
+    int timesPracticed;
     int lessonCounter = 0;
     // SQL: all lessons sorted by id and a left joint to the number of
     // lessons done by the user
@@ -214,15 +217,16 @@ int StartSql::fillOwnList(QListWidget *listOwn, QList<QString> *arrayOwn) {
         // Maybe a additional description
         lessonDescription = query.value(2).toString();
         // Show different icons depending on number of lessons done
-        if (query.value(3).toInt() > 2) {
+        timesPracticed = query.value(3).toInt();
+        if (timesPracticed > 2) {
             // Lesson done multiple
             ownIcon = QIcon(":/img/lesson_done_three.png");
         } else {
-            if (query.value(3).toInt() == 2) {
+            if (timesPracticed == 2) {
                 // Lesson done multiple
                 ownIcon = QIcon(":/img/lesson_done_two.png");
             } else {
-                if (query.value(3).toInt() == 1) {
+                if (timesPracticed == 1) {
                     // Lesson done once
                     ownIcon = QIcon(":/img/lesson_done_one.png");
                 } else {
@@ -231,7 +235,7 @@ int StartSql::fillOwnList(QListWidget *listOwn, QList<QString> *arrayOwn) {
                 }
             }
         }
-        lessonLength = query.value(4).toString();
+        lessonLength = QString::number(timesPracticed == 0 ? query.value(4).toInt() : query.value(4).toInt() / timesPracticed);
         // Add Item to the list
         currentItem = new QListWidgetItem(ownIcon, lessonName, listOwn);
         currentItem->setToolTip(lessonDescription + " (" + lessonLength + " Zeichen)");
