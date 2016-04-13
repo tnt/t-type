@@ -135,9 +135,11 @@ int StartSql::fillOpenList(QListWidget *listOpen, QList<QString> *arrayOpen,
     if (!query.exec("SELECT open_list.open_id, open_list.open_name, "
         "open_list.open_description, "
         "COUNT(DISTINCT user_lesson_list.user_lesson_id), "
-        "sum(length(oc.content_text)) "
+        "oc.lesson_length "
         "FROM open_list "
-        "JOIN open_content as oc ON oc.content_lesson = open_list.open_id "
+        "JOIN ( SELECT content_lesson, sum(length(content_text)) as lesson_length "
+        "FROM open_content GROUP BY content_lesson) as oc "
+        "ON oc.content_lesson = open_list.open_id "
         "LEFT JOIN user_lesson_list ON open_list.open_id = "
         "user_lesson_list.user_lesson_lesson AND user_lesson_list.user_lesson_type = 1 "
         + themeAll + "GROUP BY open_list.open_name;")) {
@@ -170,7 +172,7 @@ int StartSql::fillOpenList(QListWidget *listOpen, QList<QString> *arrayOpen,
                 }
             }
         }
-        lessonLength =  QString::number(timesPracticed == 0 ? query.value(4).toInt() : query.value(4).toInt() / timesPracticed);
+        lessonLength = query.value(4).toString();
         // Add Item to the list
         currentItem = new QListWidgetItem(openIcon, lessonName, listOpen);
         currentItem->setToolTip(QString(lessonDescription + " ( %1 Zeichen)").arg(lessonLength));
@@ -200,9 +202,11 @@ int StartSql::fillOwnList(QListWidget *listOwn, QList<QString> *arrayOwn) {
     if (!query.exec("SELECT own_list.own_id, own_list.own_name, "
         "own_list.own_description, "
         "COUNT(DISTINCT user_lesson_list.user_lesson_id), "
-        "sum(length(oc.content_text)) "
+        "oc.lesson_length "
         "FROM own_list "
-        "JOIN own_content as oc ON oc.content_lesson = own_list.own_id "
+        "JOIN ( SELECT content_lesson, sum(length(content_text)) as lesson_length "
+        "FROM own_content GROUP BY content_lesson) as oc "
+        "ON oc.content_lesson = own_list.own_id "
         "LEFT JOIN user_lesson_list ON own_list.own_id = "
         "user_lesson_list.user_lesson_lesson AND user_lesson_list.user_lesson_type = 2 "
         "GROUP BY own_list.own_name;")) {
@@ -235,7 +239,7 @@ int StartSql::fillOwnList(QListWidget *listOwn, QList<QString> *arrayOwn) {
                 }
             }
         }
-        lessonLength = QString::number(timesPracticed == 0 ? query.value(4).toInt() : query.value(4).toInt() / timesPracticed);
+        lessonLength = query.value(4).toString();
         // Add Item to the list
         currentItem = new QListWidgetItem(ownIcon, lessonName, listOwn);
         currentItem->setToolTip(lessonDescription + " (" + lessonLength + " Zeichen)");
