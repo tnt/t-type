@@ -47,87 +47,87 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 //! The TrainingWidget class provides the training widgets and manages them.
 /*!
-	The TrainingWidget class provides the training widgets ticker, virtual
-	keyboard and a status bar. It manages the training by communicating
-	with all widgets.
+    The TrainingWidget class provides the training widgets ticker, virtual
+    keyboard and a status bar. It manages the training by communicating
+    with all widgets.
 
-	@author Tom Thielicke, s712715
-	@version 0.3.6
-	@date 04.07.2006
+    @author Tom Thielicke, s712715
+    @version 0.3.6
+    @date 04.07.2006
 */
 class TrainingWidget : public QWidget {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
+    public:
 
-		//! Constructor, creates all necessary objects for training.
-		/*!
-			In this contructor the following variables are initialized:
-				- isStarted = false;
-				- isPaused = false;
-				- currentChar = ' ';
-				- currentStrokes = 0;
-				- currentChars = 0;
-				- currentErrors = 0;
-				- currentSeconds = 0;
-				- currentLesson = lesson;
-				- errorCorrectFlag = false;
-				- counterToNewLine = 0;
+        //! Constructor, creates all necessary objects for training.
+        /*!
+            In this contructor the following variables are initialized:
+                - isStarted = false;
+                - isPaused = false;
+                - currentChar = ' ';
+                - currentStrokes = 0;
+                - currentChars = 0;
+                - currentErrors = 0;
+                - currentSeconds = 0;
+                - currentLesson = lesson;
+                - errorCorrectFlag = false;
+                - counterToNewLine = 0;
 
-			In addition, it creates a ticker, a keyboard and a status bar.
+            In addition, it creates a ticker, a keyboard and a status bar.
 
-			@param lesson Lesson number
-			@param parent The parent QWidget
-			@see createButtons(), createLayout(), createConnections(),
-				readSettings(), startSession(), isStarted, isPaused
-				currentChar, currentStrokes, currentErrors, currentSeconds,
-				currentLesson, errorCorrectFlag, counterToNewLine, startTime
-				startFlag, colorSelection, tickerFont, background
-		*/
-		TrainingWidget(int lesson, int type, QString name, QWidget *parent = 0);
+            @param lesson Lesson number
+            @param parent The parent QWidget
+            @see createButtons(), createLayout(), createConnections(),
+                readSettings(), startSession(), isStarted, isPaused
+                currentChar, currentStrokes, currentErrors, currentSeconds,
+                currentLesson, errorCorrectFlag, counterToNewLine, startTime
+                startFlag, colorSelection, tickerFont, background
+        */
+        TrainingWidget(int lesson, int type, QString name, QWidget *parent = 0);
 
-		StatusBar *statusBar;
+        StatusBar *statusBar;
 
-		KeyBoard *keyBoard;
+        KeyBoard *keyBoard;
 
-		NumPad *numPad;
+        NumPad *numPad;
 
-		TickerBoard *tickerBoard;
+        TickerBoard *tickerBoard;
 
-	signals:
+    signals:
 
-		//! Signal, lesson is ready.
-		/*!
-			@param row Id of the saved user lesson results
-		*/
-		void lessonReady(int row, int type, QList<QChar> charList,
-			QList<int> mistakeList);
+        //! Signal, lesson is ready.
+        /*!
+            @param row Id of the saved user lesson results
+        */
+        void lessonReady(int row, int type, QList<QChar> charList,
+            QList<int> mistakeList);
 
-		//! Signal, lesson was canceled.
-		void lessonCanceled();
+        //! Signal, lesson was canceled.
+        void lessonCanceled();
 
-	public slots:
+    public slots:
 
-		//! Slot, starts the training session.
-		void startSession();
+        //! Slot, starts the training session.
+        void startSession();
 
-		//! Slot, pauses the training session.
-		void pauseSession();
+        //! Slot, pauses the training session.
+        void pauseSession();
 
-		//! Slot, cancels the training session.
-		void cancelSession();
+        //! Slot, cancels the training session.
+        void cancelSession();
 
-		//! Slot, sets a new char from ticker.
-		void setChar(QChar key);
+        //! Slot, sets a new char from ticker.
+        void setChar(QChar key);
 
-		//! Slot, sets a key from virtual keyboard.
-		void setKey(QChar key);
+        //! Slot, sets a key from virtual keyboard.
+        void setKey(QChar key);
 
-		//! Slot, updates the lesson text over the database class.
-		void updateLesson();
+        //! Slot, updates the lesson text over the database class.
+        void updateLesson();
 
-		//! Slot, updates the text of the status bar over the database class.
-		void updateStatusText(QString statustext);
+        //! Slot, updates the text of the status bar over the database class.
+        void updateStatusText(QString statustext);
 
     private slots:
 
@@ -137,81 +137,81 @@ class TrainingWidget : public QWidget {
         //! Slot, updates the time counter.
         void metronomeOutput();
 
-		//! Saves lesson results and exit training.
-		void exitTraining();
+        //! Saves lesson results and exit training.
+        void exitTraining();
 
-		//! Slot, shows the help dialog.
-		/*!
-			This slot shows the help dialog. It creates an object of
-			the QDialog class with an QTextbrowser.
-		*/
-		void showHelp();
+        //! Slot, shows the help dialog.
+        /*!
+            This slot shows the help dialog. It creates an object of
+            the QDialog class with an QTextbrowser.
+        */
+        void showHelp();
 
-	private:
+    private:
 
-		//! Creates the buttons cancel and pause.
-		void createButtons();
+        //! Creates the buttons cancel and pause.
+        void createButtons();
 
-		//! Creates full layout of the class.
-		void createLayout();
+        //! Creates full layout of the class.
+        void createLayout();
 
-		//! Creates the connections between all widgets.
-		void createConnections();
+        //! Creates the connections between all widgets.
+        void createConnections();
 
-		//! Creates the first lesson text.
-		void createLesson();
+        //! Creates the first lesson text.
+        void createLesson();
 
-		//! Updates the status values.
-		void updateStatusValues();
+        //! Updates the status values.
+        void updateStatusValues();
 
-		//! Reads all user settings.
-		void readSettings();
+        //! Reads all user settings.
+        void readSettings();
 
-		//! Object of the help browser dialog
-		HelpBrowser *helpBrowser;
+        //! Object of the help browser dialog
+        HelpBrowser *helpBrowser;
 
-		QChar currentChar;
-		int currentLesson;
-		int currentType;
-		QString currentName;
-		int currentStrokes;
-		int currentChars;
-		int currentErrors;
-		int currentSeconds;
-		int counterToNewLine;
-		int counterChars;
-		QDateTime startTime;
-		bool isStarted;
-		bool isPaused;
-		int limitType; //0=Time, 1=Token, 2=Lesson
-		int limitValue;
-		bool stopOnError;
-		bool correctOnError;
-		bool beepOnError;
-		bool beepSoundcard;
-		bool errorCorrectFlag;
-		bool oneErrorFlag;
-		bool showStatusInformation;
-		bool showHelpers;
-		bool useIntelligence;
-		bool useEszett;
-		bool useUmlaut;
+        QChar currentChar;
+        int currentLesson;
+        int currentType;
+        QString currentName;
+        int currentStrokes;
+        int currentChars;
+        int currentErrors;
+        int currentSeconds;
+        int counterToNewLine;
+        int counterChars;
+        QDateTime startTime;
+        bool isStarted;
+        bool isPaused;
+        int limitType; //0=Time, 1=Token, 2=Lesson
+        int limitValue;
+        bool stopOnError;
+        bool correctOnError;
+        bool beepOnError;
+        bool beepSoundcard;
+        bool errorCorrectFlag;
+        bool oneErrorFlag;
+        bool showStatusInformation;
+        bool showHelpers;
+        bool useIntelligence;
+        bool useEszett;
+        bool useUmlaut;
         int lessonUnit;
         QTimer *timer;
         QTimer *metronomeTimer;
         int metronomeClock;
-		CompanyLogo *companyLogo;
-		TrainingSql *trainingSql;
-		KeyboardSql *keyboardSql;
-		QPushButton *buttonPause;
-		QPushButton *buttonCancel;
-		QPushButton *buttonHelp;
+        CompanyLogo *companyLogo;
+        TrainingSql *trainingSql;
+        KeyboardSql *keyboardSql;
+        QPushButton *buttonPause;
+        QPushButton *buttonCancel;
+        QPushButton *buttonHelp;
         QString opSystem;
         QSound *bells;
         QSound *metronomeSound;
 
-		QList<QChar> charList;
-		QList<int> mistakeList;
+        QList<QChar> charList;
+        QList<int> mistakeList;
 
         QString layoutSetting;
         QString replaceSetting;

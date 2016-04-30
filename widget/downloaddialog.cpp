@@ -43,42 +43,42 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include "errormessage.h"
 
 DownloadDialog::DownloadDialog(QStringList *data, QWidget *parent) :
-	QDialog(parent) {
+    QDialog(parent) {
 
-	setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
 
     // QHttp object provides interface to HTTP
     http = new QHttp(this);
 
-	setWindowTitle(tr("Lektion downloaden"));
-	setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
+    setWindowTitle(tr("Lektion downloaden"));
+    setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
 
-	lessonData = data;
+    lessonData = data;
 
-	createProgressinfo();
+    createProgressinfo();
 
-	// Create dialog content
+    // Create dialog content
     createControls();
-	createLayout();
-	createConnections();
+    createLayout();
+    createConnections();
 
-	readSettings();
+    readSettings();
 
-	lineImportPath->setFocus();
+    lineImportPath->setFocus();
 
     setMinimumSize(APP_WIDTH_STANDARD, APP_HEIGHT_STANDARD);
 }
 
 void DownloadDialog::showHelp() {
-	helpBrowser = new HelpBrowser("lessons.html#ownlesson", this);
-	helpBrowser->show();
+    helpBrowser = new HelpBrowser("lessons.html#ownlesson", this);
+    helpBrowser->show();
 }
 
 void DownloadDialog::createProgressinfo() {
 
-	labelImportPath = new QLabel(tr("Bitte geben Sie die Internetadresse zu einer "
-		"Textdatei ein:"));
-	labelImportPath->setWordWrap(true);
+    labelImportPath = new QLabel(tr("Bitte geben Sie die Internetadresse zu einer "
+        "Textdatei ein:"));
+    labelImportPath->setWordWrap(true);
 
     progressBar = new QProgressBar(this);
     progressBar->setVisible(false);
@@ -86,23 +86,23 @@ void DownloadDialog::createProgressinfo() {
 
 void DownloadDialog::createControls() {
 
-	lineImportPath = new QLineEdit();
-	//Buttons
-	buttonOk = new QPushButton(tr("&Download starten"));
-	buttonCancel = new QPushButton(tr("&Abbrechen"));
-	buttonHelp = new QPushButton(tr("&Hilfe"));
+    lineImportPath = new QLineEdit();
+    //Buttons
+    buttonOk = new QPushButton(tr("&Download starten"));
+    buttonCancel = new QPushButton(tr("&Abbrechen"));
+    buttonHelp = new QPushButton(tr("&Hilfe"));
     checkProxy = new QCheckBox(tr("Ueber einen Proxyserver verbinden"));
 
-	txtProxyServer = new QLineEdit();
-	txtProxyServer->setShown(false);
-	txtProxyPort = new QLineEdit();
-	txtProxyPort->setShown(false);
-	labelProxyServer = new QLabel(tr("Server:"));
-	labelProxyServer->setShown(false);
-	labelProxyPort = new QLabel(tr("Port:"));
+    txtProxyServer = new QLineEdit();
+    txtProxyServer->setShown(false);
+    txtProxyPort = new QLineEdit();
+    txtProxyPort->setShown(false);
+    labelProxyServer = new QLabel(tr("Server:"));
+    labelProxyServer->setShown(false);
+    labelProxyPort = new QLabel(tr("Port:"));
     labelProxyPort->setShown(false);
 
-	buttonOk->setDefault(true);
+    buttonOk->setDefault(true);
 }
 
 void DownloadDialog::createLayout() {
@@ -131,10 +131,10 @@ void DownloadDialog::createLayout() {
 
 void DownloadDialog::createConnections() {
     connect(http, SIGNAL(responseHeaderReceived(const QHttpResponseHeader &)),
-    	this, SLOT(readResponseHeader(const QHttpResponseHeader &)));
+        this, SLOT(readResponseHeader(const QHttpResponseHeader &)));
     connect(http, SIGNAL(done(bool)), this, SLOT(httpDownloadFinished(bool)));
     connect(http, SIGNAL(dataReadProgress(int, int)), this,
-    	SLOT(updateDataReadProgress(int, int)));
+        SLOT(updateDataReadProgress(int, int)));
     connect(buttonOk, SIGNAL(clicked()), this, SLOT(downloadTxtFile()));
     connect(buttonCancel, SIGNAL(clicked()), this, SLOT(writeSettings()));
     connect(buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
@@ -147,84 +147,84 @@ void DownloadDialog::createConnections() {
 
 bool DownloadDialog::checkTxtFile() {
 
-	lessonData->clear();
+    lessonData->clear();
 
-	lessonData->append(lineImportPath->text());
+    lessonData->append(lineImportPath->text());
 
-	int bytesRead = 0;
-	int totalBytes = tempTxtFile->size();
-	QString line;
+    int bytesRead = 0;
+    int totalBytes = tempTxtFile->size();
+    QString line;
 
-	// Go to the beginning of the text file
+    // Go to the beginning of the text file
     tempTxtFile->seek(0);
 
-	QTextStream in(tempTxtFile);
+    QTextStream in(tempTxtFile);
 
-	// Read all lines of the downloaded file
-	while (!in.atEnd()) {
+    // Read all lines of the downloaded file
+    while (!in.atEnd()) {
 
-		line = in.readLine();
-		lessonData->append(line);
-		bytesRead += line.size();
+        line = in.readLine();
+        lessonData->append(line);
+        bytesRead += line.size();
 
-		updateDataReadProgress(bytesRead, totalBytes);
-	}
-	delete tempTxtFile;
-	updateDataReadProgress(totalBytes, totalBytes);
+        updateDataReadProgress(bytesRead, totalBytes);
+    }
+    delete tempTxtFile;
+    updateDataReadProgress(totalBytes, totalBytes);
 
-	if (lessonData->size() < 2) {
-		return false;
-	}
+    if (lessonData->size() < 2) {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 void DownloadDialog::downloadTxtFile() {
 
-	writeSettings();
+    writeSettings();
 
-	downloadCanceled = false;
+    downloadCanceled = false;
 
-	showProgressControls(true);
+    showProgressControls(true);
 
-	labelImportPath->setText(tr("Textdatei herunterladen..."));
-	labelImportPath->update();
+    labelImportPath->setText(tr("Textdatei herunterladen..."));
+    labelImportPath->update();
 
-	qApp->processEvents();
+    qApp->processEvents();
 
-	tempTxtFile = new QTemporaryFile;
+    tempTxtFile = new QTemporaryFile;
     if (!tempTxtFile->open()) {
-		// Error message
-		ErrorMessage *errorMessage = new ErrorMessage(this);
-		errorMessage->showMessage(ERR_TEMP_FILE_CREATION, TYPE_WARNING,
-			CANCEL_OPERATION);
+        // Error message
+        ErrorMessage *errorMessage = new ErrorMessage(this);
+        errorMessage->showMessage(ERR_TEMP_FILE_CREATION, TYPE_WARNING,
+            CANCEL_OPERATION);
 
         delete tempTxtFile;
         showProgressControls(false);
-		close();
+        close();
         return;
     }
 
-	QString userUrl = lineImportPath->text();
+    QString userUrl = lineImportPath->text();
 
-	// Check if user forgot the "http"
-	if (userUrl.left(4) != "http") {
-		userUrl = "http://" + userUrl;
-	}
+    // Check if user forgot the "http"
+    if (userUrl.left(4) != "http") {
+        userUrl = "http://" + userUrl;
+    }
     QUrl url(userUrl);
 
     if (url.path() == "") {
-		url.setPath("/");
-	}
+        url.setPath("/");
+    }
 
-	http->setHost(url.host());
+    http->setHost(url.host());
 
     // Proxy server?
     if (checkProxy->isChecked()) {
-    	http->setProxy(txtProxyServer->text(), txtProxyPort->text().toInt());
-	}
+        http->setProxy(txtProxyServer->text(), txtProxyPort->text().toInt());
+    }
 
-	http->get(url.path(), tempTxtFile);
+    http->get(url.path(), tempTxtFile);
 }
 
 void DownloadDialog::updateDataReadProgress(int bytesRead, int totalBytes) {
@@ -237,25 +237,25 @@ void DownloadDialog::showProgressControls(bool show) {
 
     if (show) {
 
-		lineImportPath->setVisible(false);
-		progressBar->setVisible(true);
-		buttonOk->setEnabled(false);
-	} else {
+        lineImportPath->setVisible(false);
+        progressBar->setVisible(true);
+        buttonOk->setEnabled(false);
+    } else {
 
         lineImportPath->setVisible(true);
         progressBar->setVisible(false);
         buttonOk->setEnabled(true);
-	}
+    }
 }
 
 void DownloadDialog::readResponseHeader(const QHttpResponseHeader
-		&responseHeader) {
+        &responseHeader) {
 
     if (responseHeader.statusCode() != 200) {
-		// Error message
-		ErrorMessage *errorMessage = new ErrorMessage(this);
-		errorMessage->showMessage(ERR_USER_DOWNLOAD_EXECUTION, TYPE_WARNING,
-			CANCEL_OPERATION);
+        // Error message
+        ErrorMessage *errorMessage = new ErrorMessage(this);
+        errorMessage->showMessage(ERR_USER_DOWNLOAD_EXECUTION, TYPE_WARNING,
+            CANCEL_OPERATION);
 
         downloadCanceled = true;
 
@@ -264,82 +264,82 @@ void DownloadDialog::readResponseHeader(const QHttpResponseHeader
 }
 
 void DownloadDialog::httpDownloadFinished(bool error) {
-	// Download finished
-	if (downloadCanceled) {
+    // Download finished
+    if (downloadCanceled) {
 
-		showProgressControls(false);
+        showProgressControls(false);
         http->abort();
-		return;
-	}
-	if (error) {
-		// Error message + additional error information
-		ErrorMessage *errorMessage = new ErrorMessage(this);
-		errorMessage->showMessage(ERR_USER_DOWNLOAD_EXECUTION, TYPE_WARNING,
-			CANCEL_OPERATION, http->errorString());
-		showProgressControls(false);
+        return;
+    }
+    if (error) {
+        // Error message + additional error information
+        ErrorMessage *errorMessage = new ErrorMessage(this);
+        errorMessage->showMessage(ERR_USER_DOWNLOAD_EXECUTION, TYPE_WARNING,
+            CANCEL_OPERATION, http->errorString());
+        showProgressControls(false);
         http->abort();
-		return;
+        return;
     }
 
-	// Execute sql file and analyze current text in DB
-	labelImportPath->setText(tr("Lektion "
-		"ueberpruefen..."));
-	labelImportPath->update();
-	qApp->processEvents();
-	if (checkTxtFile()) {
-		this->accept();
-	} else {
-		close();
-	}
+    // Execute sql file and analyze current text in DB
+    labelImportPath->setText(tr("Lektion "
+        "ueberpruefen..."));
+    labelImportPath->update();
+    qApp->processEvents();
+    if (checkTxtFile()) {
+        this->accept();
+    } else {
+        close();
+    }
 }
 
 void DownloadDialog::readSettings() {
-	// Saves settings of the startwiget
-	// (uses the default constructor of QSettings, passing
-	// the application and company name see main function)
-	#if APP_PORTABLE
+    // Saves settings of the startwiget
+    // (uses the default constructor of QSettings, passing
+    // the application and company name see main function)
+    #if APP_PORTABLE
     QSettings settings(QCoreApplication::applicationDirPath() +
-    	"/portable/settings.ini", QSettings::IniFormat);
+        "/portable/settings.ini", QSettings::IniFormat);
     #else
-	QSettings settings;
-	#endif
+    QSettings settings;
+    #endif
 
-	settings.beginGroup("lesson");
-	lineImportPath->setText(settings.value("downloadpath", LESSON_DOWNLOAD_URL).toString());
-	settings.endGroup();
+    settings.beginGroup("lesson");
+    lineImportPath->setText(settings.value("downloadpath", LESSON_DOWNLOAD_URL).toString());
+    settings.endGroup();
 
-	settings.beginGroup("proxy");
-	checkProxy->setChecked(settings.value("check_proxy", false).toBool());
-	txtProxyServer->setText(settings.value("proxy_server", "").toString());
-	txtProxyPort->setText(settings.value("proxy_port", "").toString());
-	settings.endGroup();
-	// Show proxy settings if proxy is checked
+    settings.beginGroup("proxy");
+    checkProxy->setChecked(settings.value("check_proxy", false).toBool());
+    txtProxyServer->setText(settings.value("proxy_server", "").toString());
+    txtProxyPort->setText(settings.value("proxy_port", "").toString());
+    settings.endGroup();
+    // Show proxy settings if proxy is checked
     if (checkProxy->isChecked()) {
-	    labelProxyServer->setVisible(true);
-	    txtProxyServer->setVisible(true);
-	    labelProxyPort->setVisible(true);
-   		txtProxyPort->setVisible(true);
-	}
+        labelProxyServer->setVisible(true);
+        txtProxyServer->setVisible(true);
+        labelProxyPort->setVisible(true);
+           txtProxyPort->setVisible(true);
+    }
 }
 
 void DownloadDialog::writeSettings() {
-	// Saves settings of the startwiget
-	// (uses the default constructor of QSettings, passing
-	// the application and company name see main function)
-	#if APP_PORTABLE
-	QSettings settings(QCoreApplication::applicationDirPath() +
-    	"/portable/settings.ini", QSettings::IniFormat);
+    // Saves settings of the startwiget
+    // (uses the default constructor of QSettings, passing
+    // the application and company name see main function)
+    #if APP_PORTABLE
+    QSettings settings(QCoreApplication::applicationDirPath() +
+        "/portable/settings.ini", QSettings::IniFormat);
     #else
-	QSettings settings;
-	#endif
+    QSettings settings;
+    #endif
 
-	settings.beginGroup("lesson");
-	settings.setValue("downloadpath", lineImportPath->text());
-	settings.endGroup();
+    settings.beginGroup("lesson");
+    settings.setValue("downloadpath", lineImportPath->text());
+    settings.endGroup();
 
-	settings.beginGroup("proxy");
-	settings.setValue("check_proxy", checkProxy->isChecked());
-	settings.setValue("proxy_server", txtProxyServer->text());
-	settings.setValue("proxy_port", txtProxyPort->text());
-	settings.endGroup();
+    settings.beginGroup("proxy");
+    settings.setValue("check_proxy", checkProxy->isChecked());
+    settings.setValue("proxy_server", txtProxyServer->text());
+    settings.setValue("proxy_port", txtProxyPort->text());
+    settings.endGroup();
 }

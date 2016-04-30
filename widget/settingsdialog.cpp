@@ -37,9 +37,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent) {
 
-	setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
 
-	contentsWidget = new QListWidget;
+    contentsWidget = new QListWidget;
     contentsWidget->setViewMode(QListView::IconMode);
     contentsWidget->setIconSize(QSize(96, 49));
     contentsWidget->setMovement(QListView::Static);
@@ -48,10 +48,10 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent) {
     contentsWidget->setMinimumHeight(308);
     contentsWidget->setSpacing(6);
 
-	trainingPage = new TrainingPage;
-	databasePage = new DatabasePage;
-	otherPage = new OtherPage;
-	languagePage = new LanguagePage;
+    trainingPage = new TrainingPage;
+    databasePage = new DatabasePage;
+    otherPage = new OtherPage;
+    languagePage = new LanguagePage;
 
     pagesWidget = new QStackedWidget;
     pagesWidget->addWidget(trainingPage);
@@ -59,20 +59,20 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent) {
     pagesWidget->addWidget(databasePage);
     pagesWidget->addWidget(otherPage);
 
-	//Buttons
-	buttonCancel = new QPushButton(tr("&Abbrechen"));
-	buttonSave = new QPushButton(tr("&Speichern"));
-	buttonHelp = new QPushButton(tr("&Hilfe"));
-	buttonSave->setDefault(true);
+    //Buttons
+    buttonCancel = new QPushButton(tr("&Abbrechen"));
+    buttonSave = new QPushButton(tr("&Speichern"));
+    buttonHelp = new QPushButton(tr("&Hilfe"));
+    buttonSave->setDefault(true);
 
     createIcons();
     contentsWidget->setCurrentRow(0);
 
     connect(buttonSave, SIGNAL(clicked()), this, SLOT(clickSave()));
-	connect(buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
     connect(buttonHelp, SIGNAL(clicked()), this, SLOT(showHelp()));
 
-	QHBoxLayout *horizontalLayout = new QHBoxLayout;
+    QHBoxLayout *horizontalLayout = new QHBoxLayout;
     horizontalLayout->addWidget(contentsWidget);
     horizontalLayout->addWidget(pagesWidget, 1);
 
@@ -93,7 +93,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent) {
     readSettings();
 
     setWindowTitle(tr("Grundeinstellungen"));
-	setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
+    setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
 
     buttonSave->setFocus();
 
@@ -133,33 +133,33 @@ void SettingsDialog::createIcons() {
 void SettingsDialog::changePage(QListWidgetItem *current, QListWidgetItem *previous) {
     if (!current) {
         current = previous;
-	}
+    }
 
     pagesWidget->setCurrentIndex(contentsWidget->row(current));
 }
 
 void SettingsDialog::clickSave() {
-	buttonSave->setText(tr("Bitte warten"));
+    buttonSave->setText(tr("Bitte warten"));
     buttonSave->setEnabled(false);
     writeSettings();
-	trainingPage->writeSettings();
-	databasePage->writeSettings();
-	bool requireRestartLanguage = languagePage->writeSettings();
-	bool requireRestartOther = otherPage->writeSettings();
-	if (requireRestartLanguage ||
-		requireRestartOther) {
-		QMessageBox::information(this, APP_NAME,
-			tr("Einige der Einstellungen werden erst nach einem Neustart "
-			"der Software wirksam.\n"));
-	}
-	if (createConnection()) {
-		this->accept();
-	}
+    trainingPage->writeSettings();
+    databasePage->writeSettings();
+    bool requireRestartLanguage = languagePage->writeSettings();
+    bool requireRestartOther = otherPage->writeSettings();
+    if (requireRestartLanguage ||
+        requireRestartOther) {
+        QMessageBox::information(this, APP_NAME,
+            tr("Einige der Einstellungen werden erst nach einem Neustart "
+            "der Software wirksam.\n"));
+    }
+    if (createConnection()) {
+        this->accept();
+    }
 }
 
 void SettingsDialog::showHelp() {
-	helpBrowser = new HelpBrowser("settings.html", this);
-	helpBrowser->show();
+    helpBrowser = new HelpBrowser("settings.html", this);
+    helpBrowser->show();
 }
 
 void SettingsDialog::readSettings() {

@@ -36,22 +36,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include "def/defines.h"
 
 TxtMessageDialog::TxtMessageDialog(QString message, QString title,
-	QString setting, QWidget *parent) : QDialog(parent) {
+    QString setting, QWidget *parent) : QDialog(parent) {
 
-	setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
 
-	settingName = setting;
+    settingName = setting;
 
-	setWindowTitle(title);
-	setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
+    setWindowTitle(title);
+    setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
     // Set the image
-	messageLabel = new QLabel(message);
+    messageLabel = new QLabel(message);
 
     // Create buttons
     createButtons();
 
-	// Set the layout of all widgets created above
-	createLayout();
+    // Set the layout of all widgets created above
+    createLayout();
 
     buttonOk->setFocus();
     //setFixedWidth(illustrationImage->width() + 31);
@@ -61,58 +61,58 @@ TxtMessageDialog::TxtMessageDialog(QString message, QString title,
 }
 
 void TxtMessageDialog::createButtons() {
-	//Buttons
-	buttonOk = new QPushButton(this);
-	buttonOk->setText(tr("&Ok"));
-	buttonOk->setDefault(true);
-	// Widget connections
+    //Buttons
+    buttonOk = new QPushButton(this);
+    buttonOk->setText(tr("&Ok"));
+    buttonOk->setDefault(true);
+    // Widget connections
     connect(buttonOk, SIGNAL(clicked()), this, SLOT(clickOk()));
-	showDialogCheck = new QCheckBox(tr("Diese &Information nicht mehr anzeigen"));
+    showDialogCheck = new QCheckBox(tr("Diese &Information nicht mehr anzeigen"));
 }
 
 void TxtMessageDialog::createLayout() {
-	// Button layout horizontal
-	QHBoxLayout *layoutHorizontal = new QHBoxLayout;
+    // Button layout horizontal
+    QHBoxLayout *layoutHorizontal = new QHBoxLayout;
     layoutHorizontal->addSpacing(1);
     layoutHorizontal->addWidget(messageLabel);
     layoutHorizontal->addSpacing(1);
-	// Button layout horizontal
-	QHBoxLayout *buttonLayoutHorizontal = new QHBoxLayout;
+    // Button layout horizontal
+    QHBoxLayout *buttonLayoutHorizontal = new QHBoxLayout;
     buttonLayoutHorizontal->addStretch(1);
     if (settingName != "") {
-    	buttonLayoutHorizontal->addWidget(showDialogCheck);
-	}
+        buttonLayoutHorizontal->addWidget(showDialogCheck);
+    }
     buttonLayoutHorizontal->addSpacing(1);
     buttonLayoutHorizontal->addWidget(buttonOk);
-	// Full layout of all widgets vertical
-	QVBoxLayout *mainLayout = new QVBoxLayout;
+    // Full layout of all widgets vertical
+    QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(layoutHorizontal);
     mainLayout->addSpacing(1);
     mainLayout->addLayout(buttonLayoutHorizontal);
     mainLayout->setMargin(15);
     mainLayout->setSpacing(15);
     // Pass layout to parent widget (this)
-	this->setLayout(mainLayout);
+    this->setLayout(mainLayout);
 }
 
 void TxtMessageDialog::clickOk() {
-	writeSettings();
-	accept();
+    writeSettings();
+    accept();
 }
 
 void TxtMessageDialog::writeSettings() {
-	// Saves settings of the startwiget
-	// (uses the default constructor of QSettings, passing
-	// the application and company name see main function)
-	#if APP_PORTABLE
-	QSettings settings(QCoreApplication::applicationDirPath() +
-    	"/portable/settings.ini", QSettings::IniFormat);
+    // Saves settings of the startwiget
+    // (uses the default constructor of QSettings, passing
+    // the application and company name see main function)
+    #if APP_PORTABLE
+    QSettings settings(QCoreApplication::applicationDirPath() +
+        "/portable/settings.ini", QSettings::IniFormat);
     #else
-	QSettings settings;
-	#endif
-	if (settingName != "") {
-		settings.beginGroup("general");
-		settings.setValue(settingName, !showDialogCheck->isChecked());
-		settings.endGroup();
-	}
+    QSettings settings;
+    #endif
+    if (settingName != "") {
+        settings.beginGroup("general");
+        settings.setValue(settingName, !showDialogCheck->isChecked());
+        settings.endGroup();
+    }
 }

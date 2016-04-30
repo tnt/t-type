@@ -33,7 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 //! The CheckVersion class checks for new software version.
 /*!
-	@author Tom Thielicke, s712715
+    @author Tom Thielicke, s712715
     @version 0.0.1
     @date 02.01.2011
 */
@@ -53,28 +53,28 @@ class CheckVersion : public QObject {
 
     private slots:
 
-		//! Slot, data read progress while downloading.
-		/*!
-			@param bytesRead Number of bytes read
-			@param totalBytes Number total bytes
-		*/
-		void updateDataReadProgress(int bytesRead, int totalBytes);
+        //! Slot, data read progress while downloading.
+        /*!
+            @param bytesRead Number of bytes read
+            @param totalBytes Number total bytes
+        */
+        void updateDataReadProgress(int bytesRead, int totalBytes);
 
-		//! Slot, http response header read.
-		/*!
-			@param responseHeader http response header
-		*/
-		void readResponseHeader(const QHttpResponseHeader &responseHeader);
+        //! Slot, http response header read.
+        /*!
+            @param responseHeader http response header
+        */
+        void readResponseHeader(const QHttpResponseHeader &responseHeader);
 
-		//! Slot, download has finished.
-		/*!
-			@param error An error occured true/false
-		*/
+        //! Slot, download has finished.
+        /*!
+            @param error An error occured true/false
+        */
         void httpDownloadFinished(bool error);
 
-	private:
+    private:
 
-		//! Checks wether the version is new.
+        //! Checks wether the version is new.
         bool checkVersionFile();
 
         QHttp *http;

@@ -42,109 +42,109 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 //! The UpdateDialog class provides an online update dialog.
 /*!
-	@author Tom Thielicke, s712715
-	@version 0.1.1
-	@date 19.06.2006
+    @author Tom Thielicke, s712715
+    @version 0.1.1
+    @date 19.06.2006
 */
 class UpdateDialog : public QDialog {
     Q_OBJECT
 
-	public:
+    public:
 
-		//! Constructor, creates a progress bar, a label and a start button.
-		/*!
-			In this contructor the following variables are initialized:
-				- newVersion = false;
+        //! Constructor, creates a progress bar, a label and a start button.
+        /*!
+            In this contructor the following variables are initialized:
+                - newVersion = false;
 
-			In addition, it creates a progress bar, a status label and a start
-			button.
+            In addition, it creates a progress bar, a status label and a start
+            button.
 
-			@param parent The parent QWidget
-			@see createProgressinfo(), createButtons(), createLayout(),
-				createConnections(), newVersion, buttonUpdate
-		*/
-		UpdateDialog(QWidget *parent = 0);
+            @param parent The parent QWidget
+            @see createProgressinfo(), createButtons(), createLayout(),
+                createConnections(), newVersion, buttonUpdate
+        */
+        UpdateDialog(QWidget *parent = 0);
 
-	private slots:
+    private slots:
 
-		//! Slot, download the database version from server.
-		void downloadVersionFile();
+        //! Slot, download the database version from server.
+        void downloadVersionFile();
 
-		//! Slot, download the update sql file from server.
-		void downloadSqlFile();
+        //! Slot, download the update sql file from server.
+        void downloadSqlFile();
 
-		//! Slot, data read progress while downloading.
-		/*!
-			@param bytesRead Number of bytes read
-			@param totalBytes Number total bytes
-		*/
-		void updateDataReadProgress(int bytesRead, int totalBytes);
+        //! Slot, data read progress while downloading.
+        /*!
+            @param bytesRead Number of bytes read
+            @param totalBytes Number total bytes
+        */
+        void updateDataReadProgress(int bytesRead, int totalBytes);
 
-		//! Slot, http response header read.
-		/*!
-			@param responseHeader http response header
-		*/
-		void readResponseHeader(const QHttpResponseHeader &responseHeader);
+        //! Slot, http response header read.
+        /*!
+            @param responseHeader http response header
+        */
+        void readResponseHeader(const QHttpResponseHeader &responseHeader);
 
-		//! Slot, download has finished.
-		/*!
-			@param error An error occured true/false
-		*/
-		void httpDownloadFinished(bool error);
+        //! Slot, download has finished.
+        /*!
+            @param error An error occured true/false
+        */
+        void httpDownloadFinished(bool error);
 
-		//! Writes proxy settings to hard disk.
-		void writeSettings();
+        //! Writes proxy settings to hard disk.
+        void writeSettings();
 
-		//! Slot, shows the help dialog.
-		/*!
-			This slot shows the help dialog. It creates an object of
-			the QDialog class with an QTextbrowser.
-		*/
-		void showHelp();
+        //! Slot, shows the help dialog.
+        /*!
+            This slot shows the help dialog. It creates an object of
+            the QDialog class with an QTextbrowser.
+        */
+        void showHelp();
 
-	private:
+    private:
 
-		//! Creates the cancel and start update buttons.
-		void createButtons();
+        //! Creates the cancel and start update buttons.
+        void createButtons();
 
-		//! Creates the progress bar and status label.
-		void createProgressinfo();
+        //! Creates the progress bar and status label.
+        void createProgressinfo();
 
-		//! Creates the full layout of the widget.
-		void createLayout();
+        //! Creates the full layout of the widget.
+        void createLayout();
 
-		//! Creates the connections between widgets an QHttp functions.
-		void createConnections();
+        //! Creates the connections between widgets an QHttp functions.
+        void createConnections();
 
-		//! Checks wether the version is new.
-		bool checkVersionFile();
+        //! Checks wether the version is new.
+        bool checkVersionFile();
 
-		//! Executes all sql command of the update file.
-		bool executeSqlFile();
+        //! Executes all sql command of the update file.
+        bool executeSqlFile();
 
-		//! Analyzes all text in database.
-		bool analyzeLessons(QString lessonType);
+        //! Analyzes all text in database.
+        bool analyzeLessons(QString lessonType);
 
-		//! Reads proxy settings.
-		void readSettings();
+        //! Reads proxy settings.
+        void readSettings();
 
-		//! Object of the help browser dialog
-		HelpBrowser *helpBrowser;
+        //! Object of the help browser dialog
+        HelpBrowser *helpBrowser;
 
-		QHttp *http;
-		bool newVersion;
-		QTemporaryFile *tempVersionFile;
-		QTemporaryFile *tempSqlFile;
-		QLabel *labelStatus;
-		QProgressBar *progressBar;
-		QPushButton *buttonClose;
-		QPushButton *buttonUpdate;
-		QPushButton *buttonHelp;
-		QCheckBox *checkProxy;
-		QLineEdit *txtProxyServer;
-		QLabel *labelProxyServer;
-		QLineEdit *txtProxyPort;
-		QLabel *labelProxyPort;
+        QHttp *http;
+        bool newVersion;
+        QTemporaryFile *tempVersionFile;
+        QTemporaryFile *tempSqlFile;
+        QLabel *labelStatus;
+        QProgressBar *progressBar;
+        QPushButton *buttonClose;
+        QPushButton *buttonUpdate;
+        QPushButton *buttonHelp;
+        QCheckBox *checkProxy;
+        QLineEdit *txtProxyServer;
+        QLabel *labelProxyServer;
+        QLineEdit *txtProxyPort;
+        QLabel *labelProxyPort;
 };
 
 #endif // UPDATEDIALOG_H

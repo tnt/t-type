@@ -40,37 +40,37 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 //! The ProgressionWidget class provides a progression chart.
 /*!
-	@author Tom Thielicke, s712715
-	@version 0.1.6
-	@date 16.06.2006
+    @author Tom Thielicke, s712715
+    @version 0.1.6
+    @date 16.06.2006
 */
 class ProgressionWidget : public QWidget {
-	// Necessary to create own signals, slots and connections
+    // Necessary to create own signals, slots and connections
     Q_OBJECT
 
-	public:
-		ProgressionWidget(QWidget *parent = 0);
+    public:
+        ProgressionWidget(QWidget *parent = 0);
 
-	signals:
+    signals:
 
-	private slots:
-		void changeFilter(int rowindex);
-		void changeOrder(int rowindex);
+    private slots:
+        void changeFilter(int rowindex);
+        void changeOrder(int rowindex);
 
-	protected:
+    protected:
 
-		//! Paintevent, draws current view of the chart.
-		void paintEvent(QPaintEvent *event);
+        //! Paintevent, draws current view of the chart.
+        void paintEvent(QPaintEvent *event);
         void mouseMoveEvent(QMouseEvent *event);
 
-	private:
-		void getChartValues();
-		void drawGrid();
-		void drawGraph();
-		void drawNothing();
+    private:
+        void getChartValues();
+        void drawGrid();
+        void drawGraph();
+        void drawNothing();
         void drawTooltip(QPainter *painter, double x, double y, QString message);
 
-		QList<QString> lessonsNumbers;
+        QList<QString> lessonsNumbers;
         QList<QString> lessonsTimestamps;
         QList<QString> lessonsNames;
         QList<QString> lessonsAxis;
@@ -79,18 +79,18 @@ class ProgressionWidget : public QWidget {
         QList<int> lessonsType;
         QList<double> lessonsX;
         QList<double> lessonsY;
-		QLabel *labelFilter;
-		QComboBox *comboFilter;
-		QLabel *labelOrder;
-		QComboBox *comboOrder;
-		int lessonCounter;
-		int lessonGradeMax;
-		int lessonAv;
-		QString whereClausel;
-		QString orderClausel;
-		QString xAxis;
-		int xAxisColumn;
-		QString language;
+        QLabel *labelFilter;
+        QComboBox *comboFilter;
+        QLabel *labelOrder;
+        QComboBox *comboOrder;
+        int lessonCounter;
+        int lessonGradeMax;
+        int lessonAv;
+        QString whereClausel;
+        QString orderClausel;
+        QString xAxis;
+        int xAxisColumn;
+        QString language;
         int lessonSelected;
 };
 

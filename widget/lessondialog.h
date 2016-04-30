@@ -41,90 +41,90 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 //! The LessonDialog class provides a lesson edit dialog.
 /*!
-	The LessonDialog class shows three program settings. Setting the
-	layout of the virtual keyboard, setting the ticker speed and font
-	and doing a reset of the user tables.
+    The LessonDialog class shows three program settings. Setting the
+    layout of the virtual keyboard, setting the ticker speed and font
+    and doing a reset of the user tables.
 
-	@author Tom Thielicke, s712715
-	@version 0.0.3
-	@date 18.06.2006
+    @author Tom Thielicke, s712715
+    @version 0.0.3
+    @date 18.06.2006
 */
 class LessonDialog : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
+    public:
 
-		//! Constructor, creates two table objects and provide it in two tabs.
-		/*!
-			In this contructor three groups are created over functions
-			createGroupKeyboardLayout(), createGroupUserReset() and
-			createGroupTickerFont(). In addition, standard settings are read,
-			standard font is set and connections are set.
+        //! Constructor, creates two table objects and provide it in two tabs.
+        /*!
+            In this contructor three groups are created over functions
+            createGroupKeyboardLayout(), createGroupUserReset() and
+            createGroupTickerFont(). In addition, standard settings are read,
+            standard font is set and connections are set.
 
-			@param parent The parent QWidget
-			@see createGroupKeyboardLayout(), createGroupUserReset(),
-				createGroupTickerFont(), readSettings(),
-				tickerFont
-		*/
-		LessonDialog(QString lessonid, QStringList *data,
-			QWidget *parent = 0);
+            @param parent The parent QWidget
+            @see createGroupKeyboardLayout(), createGroupUserReset(),
+                createGroupTickerFont(), readSettings(),
+                tickerFont
+        */
+        LessonDialog(QString lessonid, QStringList *data,
+            QWidget *parent = 0);
 
-	public slots:
+    public slots:
 
-	private slots:
+    private slots:
 
-		//! Slot, saves the setting data.
-		/*!
-			After the user clicked the save button, this function saves the
-			settings over function writeSettings() and closes the current
-			dialog.
+        //! Slot, saves the setting data.
+        /*!
+            After the user clicked the save button, this function saves the
+            settings over function writeSettings() and closes the current
+            dialog.
 
-			@see writeSettings()
-		*/
-		void clickSave();
+            @see writeSettings()
+        */
+        void clickSave();
 
-		//! Slot, shows the help dialog.
-		/*!
-			This slot shows the help dialog. It creates an object of
-			the QDialog class with an QTextbrowser.
-		*/
-		void showHelp();
+        //! Slot, shows the help dialog.
+        /*!
+            This slot shows the help dialog. It creates an object of
+            the QDialog class with an QTextbrowser.
+        */
+        void showHelp();
 
-	private:
+    private:
 
-		//! Creates a cancel and a save button.
-		void createButtons();
+        //! Creates a cancel and a save button.
+        void createButtons();
 
-		//! Creates the layout of the complete class.
-		void createLayout();
+        //! Creates the layout of the complete class.
+        void createLayout();
 
-		//! Creates the controls.
-		void createControls();
+        //! Creates the controls.
+        void createControls();
 
-		//! Updates the content of the controls.
-		void updateContent();
+        //! Updates the content of the controls.
+        void updateContent();
 
-		QLabel *labelLessonName;
-		QLabel *labelLessonDescription;
-		QLabel *labelLessonContent;
-		QLabel *labelLessonNotices;
-		QLabel *labelLessonUnit;
-		QLabel *labelLessonUnitRadio;
-		QLineEdit *lineLessonName;
-		QLineEdit *lineLessonDescription;
-		QTextEdit *lineLessonContent;
-		QPushButton *buttonSave;
-		QPushButton *buttonCancel;
-		QPushButton *buttonHelp;
-		QRadioButton *radioUnitSentence;
-		QRadioButton *radioUnitWord;
+        QLabel *labelLessonName;
+        QLabel *labelLessonDescription;
+        QLabel *labelLessonContent;
+        QLabel *labelLessonNotices;
+        QLabel *labelLessonUnit;
+        QLabel *labelLessonUnitRadio;
+        QLineEdit *lineLessonName;
+        QLineEdit *lineLessonDescription;
+        QTextEdit *lineLessonContent;
+        QPushButton *buttonSave;
+        QPushButton *buttonCancel;
+        QPushButton *buttonHelp;
+        QRadioButton *radioUnitSentence;
+        QRadioButton *radioUnitWord;
 
-		//! Object of the help browser dialog
-		HelpBrowser *helpBrowser;
+        //! Object of the help browser dialog
+        HelpBrowser *helpBrowser;
 
-		QString currentLessonId;
+        QString currentLessonId;
 
-		QStringList *lessonData;
+        QStringList *lessonData;
 };
 
 #endif //LESSONDIALOG_H

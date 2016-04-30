@@ -38,19 +38,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include "fingerwidget.h"
 
 FingerWidget::FingerWidget(QWidget *parent) : QWidget(parent) {
-	// Get language
-	#if APP_PORTABLE
-	QSettings settings(QCoreApplication::applicationDirPath() +
-		"/portable/settings.ini", QSettings::IniFormat);
-	#else
-	QSettings settings;
-	#endif
+    // Get language
+    #if APP_PORTABLE
+    QSettings settings(QCoreApplication::applicationDirPath() +
+        "/portable/settings.ini", QSettings::IniFormat);
+    #else
+    QSettings settings;
+    #endif
     settings.beginGroup("general");
     languageGui = settings.value("language_gui", APP_STD_LANGUAGE_GUI).toString();
     languageLayout = settings.value("language_layout", APP_STD_LANGUAGE_LAYOUT).toString();
     settings.endGroup();
 
-	getChartValues();
+    getChartValues();
 
     fingerSelected = -1;
     setMouseTracking(true);
@@ -80,8 +80,8 @@ void FingerWidget::getChartValues() {
         fingerX2.append(0);
         fingerY2.append(0);
     }
-	// SQL: all lessons sorted by id and a left joint to the number of
-	// lessons done by the user
+    // SQL: all lessons sorted by id and a left joint to the number of
+    // lessons done by the user
     if (!query.exec("SELECT keyboard_grids.finger,  "
                     "SUM(user_chars.user_char_target_errornum), "
                     "SUM(user_chars.user_char_occur_num), "
@@ -101,7 +101,7 @@ void FingerWidget::getChartValues() {
                         "(SUM(user_chars.user_char_occur_num) * 1.0)) * 100.0 DESC "
                     ";")) {
         return;
-	}
+    }
     // Read all datasets to list items
     ratePrevious = -1;
     currentRank = 9; // Real: 0-8
@@ -142,7 +142,7 @@ void FingerWidget::getChartValues() {
             << QObject::tr("Kleiner Finger rechts")
             << QObject::tr("Daumen");
 
-	update();
+    update();
 }
 
 void FingerWidget::paintEvent(QPaintEvent *event)

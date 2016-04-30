@@ -35,59 +35,59 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 LicenseDialog::LicenseDialog(QWidget *parent) : QDialog(parent) {
 
-	setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
 
-	setWindowTitle(tr("Lizenznummer"));
-	setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
+    setWindowTitle(tr("Lizenznummer"));
+    setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
 
-	// Create texbox
+    // Create texbox
     createLineEdit();
 
-	// Create buttons
+    // Create buttons
     createButtons();
 
-	// Set the layout of all widgets created above
-	createLayout();
+    // Set the layout of all widgets created above
+    createLayout();
 
-	lineLicensing->setFocus();
+    lineLicensing->setFocus();
 }
 
 void LicenseDialog::createButtons() {
-	//Buttons
-	buttonOk = new QPushButton(this);
-	buttonDemo = new QPushButton(this);
+    //Buttons
+    buttonOk = new QPushButton(this);
+    buttonDemo = new QPushButton(this);
 
-	buttonOk->setText(tr("&Ok"));
-	buttonDemo->setText(tr("&Demo starten"));
-	buttonDemo->setToolTip(tr("Im Demo-Modus koennen pro Lektion nur\n"
-		"10 Schriftzeichen eingegeben werden"));
+    buttonOk->setText(tr("&Ok"));
+    buttonDemo->setText(tr("&Demo starten"));
+    buttonDemo->setToolTip(tr("Im Demo-Modus koennen pro Lektion nur\n"
+        "10 Schriftzeichen eingegeben werden"));
 
-	buttonOk->setDefault(true);
-	// Widget connections
+    buttonOk->setDefault(true);
+    // Widget connections
     connect(buttonOk, SIGNAL(clicked()), this, SLOT(clickOk()));
     connect(buttonDemo, SIGNAL(clicked()), this, SLOT(clickDemo()));
 }
 
 void LicenseDialog::createLineEdit() {
 
-	lineLicensing = new QLineEdit();
-	lineLicensing->setInputMask(">NNNNNNNNNNNNNN");
+    lineLicensing = new QLineEdit();
+    lineLicensing->setInputMask(">NNNNNNNNNNNNNN");
 
-	labelLicensing = new QLabel(tr("Bitte geben Sie Ihre Lizenznummer "
-		"(ohne Leerzeichen) ein, "
-		"die Sie im Arbeitsbuch (Schulbuch) auf Seite 3 finden:"));
+    labelLicensing = new QLabel(tr("Bitte geben Sie Ihre Lizenznummer "
+        "(ohne Leerzeichen) ein, "
+        "die Sie im Arbeitsbuch (Schulbuch) auf Seite 3 finden:"));
 
-	labelLicensing->setWordWrap(true);
+    labelLicensing->setWordWrap(true);
 }
 
 void LicenseDialog::createLayout() {
-	// Button layout horizontal
-	QHBoxLayout *buttonLayoutHorizontal = new QHBoxLayout;
+    // Button layout horizontal
+    QHBoxLayout *buttonLayoutHorizontal = new QHBoxLayout;
     buttonLayoutHorizontal->addStretch(1);
     buttonLayoutHorizontal->addWidget(buttonDemo);
     buttonLayoutHorizontal->addWidget(buttonOk);
-	// Full layout of all widgets vertical
-	QVBoxLayout *mainLayout = new QVBoxLayout;
+    // Full layout of all widgets vertical
+    QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addSpacing(1);
     mainLayout->addWidget(labelLicensing);
     mainLayout->addSpacing(1);
@@ -97,72 +97,72 @@ void LicenseDialog::createLayout() {
     mainLayout->setMargin(15);
     mainLayout->setSpacing(15);
     // Pass layout to parent widget (this)
-	this->setLayout(mainLayout);
+    this->setLayout(mainLayout);
 }
 
 void LicenseDialog::clickOk() {
 
-	// Check license key
-	if (!checkLicenseKey(lineLicensing->text())) {
+    // Check license key
+    if (!checkLicenseKey(lineLicensing->text())) {
 
-		// License key is wrong
+        // License key is wrong
 
-		// Message to the user
-		QMessageBox::information(0, APP_NAME,
-			tr("Die eingegebene Lizenznummer ist leider nicht "
-			"korrekt.\nBitte ueberpruefen Sie die Schreibweise."));
+        // Message to the user
+        QMessageBox::information(0, APP_NAME,
+            tr("Die eingegebene Lizenznummer ist leider nicht "
+            "korrekt.\nBitte ueberpruefen Sie die Schreibweise."));
 
-		lineLicensing->setFocus();
+        lineLicensing->setFocus();
 
-	} else {
+    } else {
 
-		// License key is ok
-		writeSettings();
-		accept();
-	}
+        // License key is ok
+        writeSettings();
+        accept();
+    }
 }
 
 void LicenseDialog::clickDemo() {
-	accept();
+    accept();
 }
 
 bool LicenseDialog::checkLicenseKey(QString licenseKey) {
-	if (licenseKey.size() == 14 &&
-		licenseKey[0].isLetter() &&
-		licenseKey[1].isLetter() &&
-		(licenseKey.mid(2, 2) == "39" ||
-		licenseKey.mid(2, 2) == "41" ||
-		licenseKey.mid(2, 2) == "43" ||
-		licenseKey.mid(2, 2) == "49" ||
-		licenseKey.mid(2, 2) == "99") &&
-		licenseKey[4].isDigit() &&
-		licenseKey[5].isDigit() &&
-		licenseKey[6].isDigit() &&
-		licenseKey[7].isLetter() &&
-		licenseKey[8].isDigit() &&
-		licenseKey[9].isDigit() &&
-		licenseKey[10].isDigit() &&
-		licenseKey[11].isDigit() &&
-		licenseKey[12].isLetter() &&
-		licenseKey[13].isLetter()) {
+    if (licenseKey.size() == 14 &&
+        licenseKey[0].isLetter() &&
+        licenseKey[1].isLetter() &&
+        (licenseKey.mid(2, 2) == "39" ||
+        licenseKey.mid(2, 2) == "41" ||
+        licenseKey.mid(2, 2) == "43" ||
+        licenseKey.mid(2, 2) == "49" ||
+        licenseKey.mid(2, 2) == "99") &&
+        licenseKey[4].isDigit() &&
+        licenseKey[5].isDigit() &&
+        licenseKey[6].isDigit() &&
+        licenseKey[7].isLetter() &&
+        licenseKey[8].isDigit() &&
+        licenseKey[9].isDigit() &&
+        licenseKey[10].isDigit() &&
+        licenseKey[11].isDigit() &&
+        licenseKey[12].isLetter() &&
+        licenseKey[13].isLetter()) {
 
-		return true;
-	}
-	return false;
+        return true;
+    }
+    return false;
 }
 
 void LicenseDialog::writeSettings() {
-	// Saves settings of the startwiget
-	// (uses the default constructor of QSettings, passing
-	// the application and company name see main function)
-	#if APP_PORTABLE
-	QSettings settings(QCoreApplication::applicationDirPath() +
-    	"/portable/settings.ini", QSettings::IniFormat);
+    // Saves settings of the startwiget
+    // (uses the default constructor of QSettings, passing
+    // the application and company name see main function)
+    #if APP_PORTABLE
+    QSettings settings(QCoreApplication::applicationDirPath() +
+        "/portable/settings.ini", QSettings::IniFormat);
     #else
-	QSettings settings;
-	#endif
+    QSettings settings;
+    #endif
 
-	settings.beginGroup("general");
-	settings.setValue("licensekey", lineLicensing->text());
-	settings.endGroup();
+    settings.beginGroup("general");
+    settings.setValue("licensekey", lineLicensing->text());
+    settings.endGroup();
 }

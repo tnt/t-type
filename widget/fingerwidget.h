@@ -38,25 +38,25 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 //! The FingerWidget class provides a finger error rate chart.
 /*!
-	@author Tom Thielicke, s712715
+    @author Tom Thielicke, s712715
     @version 0.0.2
     @date 16.12.2010
 */
 class FingerWidget : public QWidget {
-	// Necessary to create own signals, slots and connections
+    // Necessary to create own signals, slots and connections
     Q_OBJECT
 
-	public:
+    public:
         FingerWidget(QWidget *parent = 0);
 
-	protected:
+    protected:
 
-		//! Paintevent, draws current view of the chart.
-		void paintEvent(QPaintEvent *event);
+        //! Paintevent, draws current view of the chart.
+        void paintEvent(QPaintEvent *event);
         void mouseMoveEvent(QMouseEvent *event);
 
-	private:
-		void getChartValues();
+    private:
+        void getChartValues();
         void drawHeadline();
         void drawFingers();
         void drawFinger(int currentFinger, double currentPos, double widgetLeft,

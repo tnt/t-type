@@ -38,48 +38,48 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 //! The RegExpDialog class provides a keyboard layout regular expression dialog.
 
 class RegExpDialog : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 
     public:
 
         RegExpDialog(QString layout, QWidget *parent = 0);
 
-	public slots:
+    public slots:
 
-	private slots:
+    private slots:
 
-		//! Slot, saves the setting data.
-		/*!
-			After the user clicked the save button, this function saves the
-			settings over function writeSettings() and closes the current
-			dialog.
+        //! Slot, saves the setting data.
+        /*!
+            After the user clicked the save button, this function saves the
+            settings over function writeSettings() and closes the current
+            dialog.
 
-			@see writeSettings()
-		*/
-		void clickSave();
+            @see writeSettings()
+        */
+        void clickSave();
 
-		//! Slot, shows the help dialog.
-		/*!
-			This slot shows the help dialog. It creates an object of
-			the QDialog class with an QTextbrowser.
-		*/
+        //! Slot, shows the help dialog.
+        /*!
+            This slot shows the help dialog. It creates an object of
+            the QDialog class with an QTextbrowser.
+        */
         void getDefault();
 
-	private:
+    private:
 
         //! Reads all user settings.
         void readSettings();
 
         void writeSettings();
 
-		//! Creates a cancel and a save button.
-		void createButtons();
+        //! Creates a cancel and a save button.
+        void createButtons();
 
-		//! Creates the layout of the complete class.
-		void createLayout();
+        //! Creates the layout of the complete class.
+        void createLayout();
 
-		//! Creates the controls.
-		void createControls();
+        //! Creates the controls.
+        void createControls();
 
         QLabel *labelRegExp;
         QLabel *labelReplace;
@@ -87,13 +87,13 @@ class RegExpDialog : public QDialog {
         QLabel *labelReplaceHelp;
         QLineEdit *lineRegExp;
         QLineEdit *lineReplace;
-		QPushButton *buttonSave;
-		QPushButton *buttonCancel;
+        QPushButton *buttonSave;
+        QPushButton *buttonCancel;
         QPushButton *buttonDefault;
 
         QString currentLayout;
 
-		//! Object of the help browser dialog
+        //! Object of the help browser dialog
         HelpBrowser *helpBrowser;
 };
 

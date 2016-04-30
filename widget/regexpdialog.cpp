@@ -41,7 +41,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 RegExpDialog::RegExpDialog(QString layout, QWidget *parent) : QDialog(parent) {
 
-	setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
 
     currentLayout = layout;
 
@@ -51,12 +51,12 @@ RegExpDialog::RegExpDialog(QString layout, QWidget *parent) : QDialog(parent) {
     // Create controls
     createControls();
 
-	// Set the layout of all widgets created above
-	createLayout();
+    // Set the layout of all widgets created above
+    createLayout();
 
     readSettings();
 
-	// Widget connections
+    // Widget connections
     connect(buttonSave, SIGNAL(clicked()), this, SLOT(clickSave()));
     connect(buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
     connect(buttonDefault, SIGNAL(clicked()), this, SLOT(getDefault()));
@@ -69,11 +69,11 @@ RegExpDialog::RegExpDialog(QString layout, QWidget *parent) : QDialog(parent) {
 }
 
 void RegExpDialog::createButtons() {
-	// Buttons
-	buttonCancel = new QPushButton(tr("&Abbrechen"));
-	buttonSave = new QPushButton(tr("&Speichern"));
+    // Buttons
+    buttonCancel = new QPushButton(tr("&Abbrechen"));
+    buttonSave = new QPushButton(tr("&Speichern"));
     buttonDefault = new QPushButton(tr("S&tandard"));
-	buttonSave->setDefault(true);
+    buttonSave->setDefault(true);
 }
 
 void RegExpDialog::createControls()
@@ -106,7 +106,7 @@ void RegExpDialog::createControls()
                                   "\n" + tr("ae=ae,oe=oe,ue=ue,Ae=Ae,Oe=Oe,Ue=Ue,ss=ss"));
     labelReplaceHelp->setFont(h2);
     labelReplaceHelp->setWordWrap(true);
-	// Lines (text input)
+    // Lines (text input)
     lineRegExp = new QLineEdit();
     lineReplace = new QLineEdit();
 
@@ -115,8 +115,8 @@ void RegExpDialog::createControls()
 }
 
 void RegExpDialog::createLayout() {
-	// Button layout horizontal
-	QHBoxLayout *buttonLayoutHorizontal = new QHBoxLayout;
+    // Button layout horizontal
+    QHBoxLayout *buttonLayoutHorizontal = new QHBoxLayout;
     buttonLayoutHorizontal->addWidget(buttonDefault);
     buttonLayoutHorizontal->addStretch(1);
     buttonLayoutHorizontal->addWidget(buttonCancel);
@@ -135,12 +135,12 @@ void RegExpDialog::createLayout() {
     mainLayout->addLayout(buttonLayoutHorizontal);
     mainLayout->setMargin(15);
     // Pass layout to parent widget (this)
-	this->setLayout(mainLayout);
+    this->setLayout(mainLayout);
 }
 
 void RegExpDialog::clickSave() {
     writeSettings();
-	this->accept();
+    this->accept();
 }
 
 void RegExpDialog::getDefault() {

@@ -22,22 +22,22 @@ public:
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
-	void destroy();
-	QChar character();
-	double wind;
-	double rad;
+    void destroy();
+    QChar character();
+    double wind;
+    double rad;
 
 
 private:
-	void destroying();
+    void destroying();
 
     int currentSpeed;
-	int currentX;
-	int currentY;
-	int currentRadius;
-	int destroyed;
+    int currentX;
+    int currentY;
+    int currentRadius;
+    int destroyed;
     QColor color;
-	QChar currentCharacter;
+    QChar currentCharacter;
 };
 
 #endif // CHARBALL_H

@@ -36,47 +36,47 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 HelpBrowser::HelpBrowser(QString link, QWidget *parent) : QDialog(parent) {
 
-	setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
 
-	setWindowTitle(tr("Hilfe"));
-	setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
-	//setModal(false);
-	
-	readSettings();
-	
-	// Create buttons
+    setWindowTitle(tr("Hilfe"));
+    setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
+    //setModal(false);
+    
+    readSettings();
+    
+    // Create buttons
     createButtons();
 
-	textBrowser = new QTextBrowser(this);
+    textBrowser = new QTextBrowser(this);
 
     textBrowser->setOpenExternalLinks(true);
-	
+    
     textBrowser->setSource(QString("file:///") + 
-    	QCoreApplication::applicationDirPath() + 
-    	QString("/help/") + language + QString("/index.html"));
-    	
+        QCoreApplication::applicationDirPath() + 
+        QString("/help/") + language + QString("/index.html"));
+        
     if (link != "") {
     
-		textBrowser->setSource(QString("file:///") + 
-			QCoreApplication::applicationDirPath() + 
-			QString("/help/") + language + QString("/content/") + link);
-			
-	}
+        textBrowser->setSource(QString("file:///") + 
+            QCoreApplication::applicationDirPath() + 
+            QString("/help/") + language + QString("/content/") + link);
+            
+    }
 
-	// Set the layout of all widgets created above
-	createLayout();
+    // Set the layout of all widgets created above
+    createLayout();
 
-	// Widget connections
+    // Widget connections
     connect(buttonClose, SIGNAL(clicked()), this, SLOT(clickClose()));
-	connect(buttonBack, SIGNAL(clicked()), textBrowser, SLOT(backward()));
-	connect(buttonHome, SIGNAL(clicked()), textBrowser, SLOT(home()));
+    connect(buttonBack, SIGNAL(clicked()), textBrowser, SLOT(backward()));
+    connect(buttonHome, SIGNAL(clicked()), textBrowser, SLOT(home()));
     connect(buttonPrint, SIGNAL(clicked()), this, SLOT(clickPrint()));
-	connect(textBrowser, SIGNAL(sourceChanged(QUrl)), this, SLOT(changePage(QUrl)));
-	connect(textBrowser, SIGNAL(backwardAvailable(bool)), buttonBack,
-		SLOT(setEnabled(bool)));
+    connect(textBrowser, SIGNAL(sourceChanged(QUrl)), this, SLOT(changePage(QUrl)));
+    connect(textBrowser, SIGNAL(backwardAvailable(bool)), buttonBack,
+        SLOT(setEnabled(bool)));
 
-	setWindowTitle(tr("Hilfe"));
-	setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
+    setWindowTitle(tr("Hilfe"));
+    setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
 
     buttonClose->setFocus();
 
@@ -84,33 +84,33 @@ HelpBrowser::HelpBrowser(QString link, QWidget *parent) : QDialog(parent) {
 }
 
 void HelpBrowser::createButtons() {
-	//Buttons
-	buttonBack = new QPushButton(QIcon(":/img/help_arrow_left.png"), tr(" Zurueck"));
-	buttonBack->setEnabled(false);
-	buttonHome = new QPushButton(QIcon(":/img/help_home.png"), tr(" Inhaltsverzeichnis"));
-	buttonClose = new QPushButton(tr("&Schliessen"));
-	buttonClose->setDefault(true);
+    //Buttons
+    buttonBack = new QPushButton(QIcon(":/img/help_arrow_left.png"), tr(" Zurueck"));
+    buttonBack->setEnabled(false);
+    buttonHome = new QPushButton(QIcon(":/img/help_home.png"), tr(" Inhaltsverzeichnis"));
+    buttonClose = new QPushButton(tr("&Schliessen"));
+    buttonClose->setDefault(true);
     buttonPrint = new QPushButton(QIcon(":/img/help_print.png"), tr(" Seite &drucken"));
 }
 
 void HelpBrowser::createLayout() {
-	// Button layout horizontal
-	QHBoxLayout *buttonLayoutTop = new QHBoxLayout;
+    // Button layout horizontal
+    QHBoxLayout *buttonLayoutTop = new QHBoxLayout;
     buttonLayoutTop->addWidget(buttonBack);
     buttonLayoutTop->addWidget(buttonHome);
     buttonLayoutTop->addStretch(1);
     buttonLayoutTop->addWidget(buttonPrint);
-	// Center layout horizontal
-	QHBoxLayout *layoutHorizontal = new QHBoxLayout;
+    // Center layout horizontal
+    QHBoxLayout *layoutHorizontal = new QHBoxLayout;
     layoutHorizontal->addSpacing(1);
     layoutHorizontal->addWidget(textBrowser);
     layoutHorizontal->addSpacing(1);
-	// Button layout horizontal
-	QHBoxLayout *buttonLayoutBottom = new QHBoxLayout;
+    // Button layout horizontal
+    QHBoxLayout *buttonLayoutBottom = new QHBoxLayout;
     buttonLayoutBottom->addStretch(1);
     buttonLayoutBottom->addWidget(buttonClose);
-	// Full layout of all widgets vertical
-	QVBoxLayout *mainLayout = new QVBoxLayout;
+    // Full layout of all widgets vertical
+    QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(buttonLayoutTop);
     mainLayout->addLayout(layoutHorizontal);
     mainLayout->addSpacing(1);
@@ -118,11 +118,11 @@ void HelpBrowser::createLayout() {
     mainLayout->setMargin(15);
     mainLayout->setSpacing(15);
     // Pass layout to parent widget (this)
-	this->setLayout(mainLayout);
+    this->setLayout(mainLayout);
 }
 
 void HelpBrowser::clickClose() {
-	accept();
+    accept();
 }
 
 void HelpBrowser::clickPrint() {
@@ -139,18 +139,18 @@ void HelpBrowser::clickPrint() {
 }
 
 void HelpBrowser::changePage(QUrl url) {
-	//this->setWindowTitle(url.toString());
+    //this->setWindowTitle(url.toString());
 }
 
 void HelpBrowser::readSettings() {
-	#if APP_PORTABLE
-	QSettings settings(QCoreApplication::applicationDirPath() +
-    	"/portable/settings.ini", QSettings::IniFormat);
+    #if APP_PORTABLE
+    QSettings settings(QCoreApplication::applicationDirPath() +
+        "/portable/settings.ini", QSettings::IniFormat);
     #else
-	QSettings settings;
-	#endif
-	settings.beginGroup("general");
-	language = settings.value("language_gui",
-		 APP_STD_LANGUAGE_GUI).toString();
-	settings.endGroup();
+    QSettings settings;
+    #endif
+    settings.beginGroup("general");
+    language = settings.value("language_gui",
+         APP_STD_LANGUAGE_GUI).toString();
+    settings.endGroup();
 }

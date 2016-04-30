@@ -37,29 +37,29 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 //! The LessonTableSql class provides a table widget with lessons.
 /*!
-	@author Tom Thielicke, s712715
-	@version 0.0.2
-	@date 16.06.2006
+    @author Tom Thielicke, s712715
+    @version 0.0.2
+    @date 16.06.2006
 */
 class LessonResult : public QWidget {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
-		LessonResult(int row, int type, QList<QChar> charlist,
-			QList<int> mistakelist, QWidget *parent = 0);
+    public:
+        LessonResult(int row, int type, QList<QChar> charlist,
+            QList<int> mistakelist, QWidget *parent = 0);
 
     private slots:
         void createPrintOutput();
         void publishFacebook();
 
-	private:
-		void createOutput();
-		QPushButton *buttonPrintLesson;
+    private:
+        void createOutput();
+        QPushButton *buttonPrintLesson;
         QPushButton *buttonPublishFacebook;
-		QList<QChar> charList;
-		QList<int> mistakeList;
-		int lessonRow;
-		QString language;
+        QList<QChar> charList;
+        QList<int> mistakeList;
+        int lessonRow;
+        QString language;
         QString facebookComment;
         QString languageGui;
 

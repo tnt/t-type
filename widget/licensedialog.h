@@ -36,50 +36,50 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 //! The LicenseDialog class provides a license input widget.
 /*!
-	The LicenseDialog class shows a dialog to enter a license key.
+    The LicenseDialog class shows a dialog to enter a license key.
 
-	@author Tom Thielicke, s712715
-	@version 0.0.1
-	@date 09.09.2008
+    @author Tom Thielicke, s712715
+    @version 0.0.1
+    @date 09.09.2008
 */
 class LicenseDialog : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
+    public:
 
-		//! Constructor, creates two table objects and provide it in two tabs.
-		LicenseDialog(QWidget *parent = 0);
+        //! Constructor, creates two table objects and provide it in two tabs.
+        LicenseDialog(QWidget *parent = 0);
 
-		bool checkLicenseKey(QString licenseKey);
+        bool checkLicenseKey(QString licenseKey);
 
-	public slots:
+    public slots:
 
-	private slots:
+    private slots:
 
-		//! Start button pressed
-		void clickOk();
+        //! Start button pressed
+        void clickOk();
 
-		//! Demo button pressed
-		void clickDemo();
+        //! Demo button pressed
+        void clickDemo();
 
-	private:
+    private:
 
-		//! Creates a cancel and a ok button.
-		void createButtons();
+        //! Creates a cancel and a ok button.
+        void createButtons();
 
-		//! Creates a textbox.
-		void createLineEdit();
+        //! Creates a textbox.
+        void createLineEdit();
 
-		//! Creates the layout of the complete class.
-		void createLayout();
+        //! Creates the layout of the complete class.
+        void createLayout();
 
-		//! Writes user settings
-		void writeSettings();
+        //! Writes user settings
+        void writeSettings();
 
-		QPushButton *buttonOk;
-		QPushButton *buttonDemo;
-		QLabel *labelLicensing;
-		QLineEdit *lineLicensing;
+        QPushButton *buttonOk;
+        QPushButton *buttonDemo;
+        QLabel *labelLicensing;
+        QLineEdit *lineLicensing;
 };
 
 #endif //LICENSEDIALOG_H

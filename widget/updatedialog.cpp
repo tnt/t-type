@@ -46,47 +46,47 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 // Constructor
 UpdateDialog::UpdateDialog(QWidget *parent) : QDialog(parent) {
 
-	setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() ^ Qt::WindowContextHelpButtonHint);
 
-	// Init flag default value: no new version available
+    // Init flag default value: no new version available
     newVersion = false;
 
     // QHttp object provides interface to HTTP
     http = new QHttp(this);
 
-	// Create dialog content
-	createProgressinfo();
-	createButtons();
-	createLayout();
-	createConnections();
+    // Create dialog content
+    createProgressinfo();
+    createButtons();
+    createLayout();
+    createConnections();
 
-	// Proxy settings
-	readSettings();
+    // Proxy settings
+    readSettings();
 
-	// Dialog defaults
+    // Dialog defaults
     setWindowTitle(tr("Aktualisierung"));
-	setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
+    setWindowIcon(QIcon(":/img/" + QString(ICON_FILENAME)));
     buttonUpdate->setFocus();
 }
 
 void UpdateDialog::showHelp() {
-	helpBrowser = new HelpBrowser("update.html", this);
-	helpBrowser->show();
+    helpBrowser = new HelpBrowser("update.html", this);
+    helpBrowser->show();
 }
 
 void UpdateDialog::createProgressinfo() {
     labelStatus = new QLabel(tr("Hier koennen Sie eine Aktualisierung "
-    	"der Lektionen durchfuehren.\nFuer die Aktualisierung ist eine "
-    	"Internetverbindung erforderlich."));
+        "der Lektionen durchfuehren.\nFuer die Aktualisierung ist eine "
+        "Internetverbindung erforderlich."));
     progressBar = new QProgressBar(this);
     progressBar->setVisible(false);
 }
 
 void UpdateDialog::createButtons() {
-	//Buttons
+    //Buttons
     buttonClose = new QPushButton(tr("Schliessen"));
     buttonUpdate = new QPushButton(tr("Aktualisierung starten"));
-	buttonHelp = new QPushButton(tr("&Hilfe"));
+    buttonHelp = new QPushButton(tr("&Hilfe"));
     checkProxy = new QCheckBox(tr("Ueber einen Proxyserver verbinden"));
     txtProxyServer = new QLineEdit();
     txtProxyServer->setShown(false);
@@ -124,12 +124,12 @@ void UpdateDialog::createLayout() {
 
 void UpdateDialog::createConnections() {
     connect(http, SIGNAL(responseHeaderReceived(const QHttpResponseHeader &)),
-    	this, SLOT(readResponseHeader(const QHttpResponseHeader &)));
+        this, SLOT(readResponseHeader(const QHttpResponseHeader &)));
     connect(http, SIGNAL(done(bool)), this, SLOT(httpDownloadFinished(bool)));
     connect(http, SIGNAL(dataReadProgress(int, int)), this,
-    	SLOT(updateDataReadProgress(int, int)));
+        SLOT(updateDataReadProgress(int, int)));
     connect(buttonUpdate, SIGNAL(clicked()), this,
-    	SLOT(downloadVersionFile()));
+        SLOT(downloadVersionFile()));
     connect(buttonClose, SIGNAL(clicked()), this, SLOT(writeSettings()));
     connect(buttonClose, SIGNAL(clicked()), this, SLOT(close()));
     connect(checkProxy, SIGNAL(toggled(bool)), txtProxyServer, SLOT(setShown(bool)));
@@ -140,21 +140,21 @@ void UpdateDialog::createConnections() {
 }
 
 void UpdateDialog::downloadVersionFile() {
-	// Save proxy settings
-	writeSettings();
+    // Save proxy settings
+    writeSettings();
 
-	labelStatus->setText(
-		tr("Versionsinformationen herunterladen..."));
-	labelStatus->update();
-	progressBar->setVisible(true);
-	qApp->processEvents();
+    labelStatus->setText(
+        tr("Versionsinformationen herunterladen..."));
+    labelStatus->update();
+    progressBar->setVisible(true);
+    qApp->processEvents();
 
     tempVersionFile = new QTemporaryFile;
     if (!tempVersionFile->open()) {
-		// Error message
-		ErrorMessage *errorMessage = new ErrorMessage(this);
-		errorMessage->showMessage(ERR_TEMP_FILE_CREATION, TYPE_CRITICAL,
-			CANCEL_UPDATE);
+        // Error message
+        ErrorMessage *errorMessage = new ErrorMessage(this);
+        errorMessage->showMessage(ERR_TEMP_FILE_CREATION, TYPE_CRITICAL,
+            CANCEL_UPDATE);
         delete tempVersionFile;
         progressBar->setVisible(false);
         buttonUpdate->setEnabled(true);
@@ -173,38 +173,38 @@ void UpdateDialog::downloadVersionFile() {
 
     // Proxy server?
     if (checkProxy->isChecked()) {
-    	http->setProxy(txtProxyServer->text(), txtProxyPort->text().toInt());
-	}
+        http->setProxy(txtProxyServer->text(), txtProxyPort->text().toInt());
+    }
 
     http->get(UPDATE_URL_VERSION, tempVersionFile);
 }
 
 void UpdateDialog::downloadSqlFile() {
-	http->abort();
-	progressBar->setVisible(true);
-	labelStatus->setText(tr("SQL-Datei herunterladen..."));
-	labelStatus->update();
-	qApp->processEvents();
-	tempSqlFile = new QTemporaryFile;
+    http->abort();
+    progressBar->setVisible(true);
+    labelStatus->setText(tr("SQL-Datei herunterladen..."));
+    labelStatus->update();
+    qApp->processEvents();
+    tempSqlFile = new QTemporaryFile;
     if (!tempSqlFile->open()) {
-		// Error message
-		ErrorMessage *errorMessage = new ErrorMessage(this);
-		errorMessage->showMessage(ERR_TEMP_FILE_CREATION, TYPE_CRITICAL,
-			CANCEL_UPDATE);
+        // Error message
+        ErrorMessage *errorMessage = new ErrorMessage(this);
+        errorMessage->showMessage(ERR_TEMP_FILE_CREATION, TYPE_CRITICAL,
+            CANCEL_UPDATE);
         delete tempSqlFile;
-		close();
+        close();
         return;
     }
     buttonUpdate->setEnabled(false);
 
-	http->setHost(UPDATE_URL);
+    http->setHost(UPDATE_URL);
 
     // Proxy server?
     if (checkProxy->isChecked()) {
-    	http->setProxy(txtProxyServer->text(), txtProxyPort->text().toInt());
-	}
+        http->setProxy(txtProxyServer->text(), txtProxyPort->text().toInt());
+    }
 
-	http->get(UPDATE_URL_SQL, tempSqlFile);
+    http->get(UPDATE_URL_SQL, tempSqlFile);
 }
 
 void UpdateDialog::updateDataReadProgress(int bytesRead, int totalBytes) {
@@ -213,199 +213,199 @@ void UpdateDialog::updateDataReadProgress(int bytesRead, int totalBytes) {
 }
 
 void UpdateDialog::readResponseHeader(const QHttpResponseHeader
-		&responseHeader) {
+        &responseHeader) {
     if (responseHeader.statusCode() != 200) {
-		// Error message
-		ErrorMessage *errorMessage = new ErrorMessage(this);
-		errorMessage->showMessage(ERR_UPDATE_EXECUTION, TYPE_CRITICAL,
-			CANCEL_UPDATE);
+        // Error message
+        ErrorMessage *errorMessage = new ErrorMessage(this);
+        errorMessage->showMessage(ERR_UPDATE_EXECUTION, TYPE_CRITICAL,
+            CANCEL_UPDATE);
         http->abort();
         return;
     }
 }
 
 void UpdateDialog::httpDownloadFinished(bool error) {
-	// Download finished
-	if (error) {
-		// Error message + additional error information
-		ErrorMessage *errorMessage = new ErrorMessage(this);
-		errorMessage->showMessage(ERR_UPDATE_EXECUTION, TYPE_CRITICAL,
-			CANCEL_UPDATE, http->errorString());
-		close();
-		return;
+    // Download finished
+    if (error) {
+        // Error message + additional error information
+        ErrorMessage *errorMessage = new ErrorMessage(this);
+        errorMessage->showMessage(ERR_UPDATE_EXECUTION, TYPE_CRITICAL,
+            CANCEL_UPDATE, http->errorString());
+        close();
+        return;
     }
 
-	if (!newVersion) {
-		// First check the database version
-		labelStatus->setText(tr("Version ueberpruefen..."));
-		labelStatus->update();
-		qApp->processEvents();
-		if (checkVersionFile()) {
-			// DB Version is new
-			// -> download sql file
-			delete tempVersionFile;
-			newVersion = true;
-			downloadSqlFile();
-		}
-	} else {
-		// Execute sql file and analyze current text in DB
-		labelStatus->setText(APP_NAME + tr(" Datenbank "
-			"aktualisieren..."));
-		labelStatus->update();
-		qApp->processEvents();
-		if (executeSqlFile()) {
-			StartSql *lessonSql = new StartSql();
-			if (lessonSql->analyzeLessons("lesson")) {
-				if (lessonSql->analyzeLessons("open")) {
-					labelStatus->setText(APP_NAME + tr(" wurde "
-						"erfolgreich aktualisiert!"));
-					buttonClose->setFocus();
-				} else {
-					close();
-				}
-			} else {
-				close();
-			}
-		} else {
-			close();
-		}
-	}
+    if (!newVersion) {
+        // First check the database version
+        labelStatus->setText(tr("Version ueberpruefen..."));
+        labelStatus->update();
+        qApp->processEvents();
+        if (checkVersionFile()) {
+            // DB Version is new
+            // -> download sql file
+            delete tempVersionFile;
+            newVersion = true;
+            downloadSqlFile();
+        }
+    } else {
+        // Execute sql file and analyze current text in DB
+        labelStatus->setText(APP_NAME + tr(" Datenbank "
+            "aktualisieren..."));
+        labelStatus->update();
+        qApp->processEvents();
+        if (executeSqlFile()) {
+            StartSql *lessonSql = new StartSql();
+            if (lessonSql->analyzeLessons("lesson")) {
+                if (lessonSql->analyzeLessons("open")) {
+                    labelStatus->setText(APP_NAME + tr(" wurde "
+                        "erfolgreich aktualisiert!"));
+                    buttonClose->setFocus();
+                } else {
+                    close();
+                }
+            } else {
+                close();
+            }
+        } else {
+            close();
+        }
+    }
 }
 
 bool UpdateDialog::checkVersionFile() {
-	// Go to the beginning of the version file
+    // Go to the beginning of the version file
     tempVersionFile->seek(0);
 
-	QSqlQuery query;
-	QTextStream in(tempVersionFile);
-	// Read only the first line (server DB version)
-	QString updateVersion = in.readLine();
-	if (updateVersion.isNull()) {
-		// Can't read line
-		// Error message
-		ErrorMessage *errorMessage = new ErrorMessage(this);
-		errorMessage->showMessage(ERR_ONLINE_VERSION_READABLE, TYPE_CRITICAL,
-			CANCEL_UPDATE);
+    QSqlQuery query;
+    QTextStream in(tempVersionFile);
+    // Read only the first line (server DB version)
+    QString updateVersion = in.readLine();
+    if (updateVersion.isNull()) {
+        // Can't read line
+        // Error message
+        ErrorMessage *errorMessage = new ErrorMessage(this);
+        errorMessage->showMessage(ERR_ONLINE_VERSION_READABLE, TYPE_CRITICAL,
+            CANCEL_UPDATE);
         close();
         return false;
-	} else {
-		// Check DB version of software
-		if (!query.exec("SELECT * FROM db_version ORDER BY version DESC;")) {
-			// Error message
-			ErrorMessage *errorMessage = new ErrorMessage(this);
-			errorMessage->showMessage(ERR_DB_VERSION_READABLE,
-				TYPE_CRITICAL, CANCEL_UPDATE);
-			close();
-			return false;
-		} else {
-			if (!query.first()) {
-				// Error message
-				ErrorMessage *errorMessage = new ErrorMessage(this);
-				errorMessage->showMessage(ERR_DB_VERSION_READABLE,
-					TYPE_CRITICAL, CANCEL_UPDATE);
-				close();
-				return false;
-			} else {
-				// Server DB version is 0
-				// -> software is too old to update
-				QString softwareVersion = query.value(0).toString();
-				if (updateVersion.trimmed() == "0") {
-					if (QMessageBox::information(this, APP_NAME,
-						QString(tr("Ihre Version der Software ist "
-						"veraltet und nicht mehr aktualisierungsfaehig.\nDie "
-						"neue Version erhalten Sie im Internet unter %1\n\n"
-						"Moechten Sie die neue Version jetzt herunterladen?"
-						)).arg(APP_URL), QMessageBox::Yes | QMessageBox::No) ==
-						QMessageBox::Yes) {
+    } else {
+        // Check DB version of software
+        if (!query.exec("SELECT * FROM db_version ORDER BY version DESC;")) {
+            // Error message
+            ErrorMessage *errorMessage = new ErrorMessage(this);
+            errorMessage->showMessage(ERR_DB_VERSION_READABLE,
+                TYPE_CRITICAL, CANCEL_UPDATE);
+            close();
+            return false;
+        } else {
+            if (!query.first()) {
+                // Error message
+                ErrorMessage *errorMessage = new ErrorMessage(this);
+                errorMessage->showMessage(ERR_DB_VERSION_READABLE,
+                    TYPE_CRITICAL, CANCEL_UPDATE);
+                close();
+                return false;
+            } else {
+                // Server DB version is 0
+                // -> software is too old to update
+                QString softwareVersion = query.value(0).toString();
+                if (updateVersion.trimmed() == "0") {
+                    if (QMessageBox::information(this, APP_NAME,
+                        QString(tr("Ihre Version der Software ist "
+                        "veraltet und nicht mehr aktualisierungsfaehig.\nDie "
+                        "neue Version erhalten Sie im Internet unter %1\n\n"
+                        "Moechten Sie die neue Version jetzt herunterladen?"
+                        )).arg(APP_URL), QMessageBox::Yes | QMessageBox::No) ==
+                        QMessageBox::Yes) {
 
-						QDesktopServices::openUrl(QString(APP_URL));
-					}
-					close();
-					return false;
-				}
-				// Check whether ther is a new DB version on the server
-				if (softwareVersion.trimmed() != updateVersion.trimmed()) {
-					labelStatus->setText(QString(tr("Es stehen "
-						"Updates fuer %1 zur Verfuegung...")).arg(APP_NAME));
-					return true;
-				}
-			}
-		}
-	}
-	labelStatus->setText(APP_NAME + tr(" befindet sich bereits auf "
-		"dem aktuellsten Stand.\nEs stehen derzeit keine Aktualisierungen zur "
-		"Verfuegung."));
-	return false;
+                        QDesktopServices::openUrl(QString(APP_URL));
+                    }
+                    close();
+                    return false;
+                }
+                // Check whether ther is a new DB version on the server
+                if (softwareVersion.trimmed() != updateVersion.trimmed()) {
+                    labelStatus->setText(QString(tr("Es stehen "
+                        "Updates fuer %1 zur Verfuegung...")).arg(APP_NAME));
+                    return true;
+                }
+            }
+        }
+    }
+    labelStatus->setText(APP_NAME + tr(" befindet sich bereits auf "
+        "dem aktuellsten Stand.\nEs stehen derzeit keine Aktualisierungen zur "
+        "Verfuegung."));
+    return false;
 
 }
 
 bool UpdateDialog::executeSqlFile() {
     QSqlQuery query;
-	QString line = "";
-	int bytesRead = 0;
-	int totalBytes = tempSqlFile->size();
+    QString line = "";
+    int bytesRead = 0;
+    int totalBytes = tempSqlFile->size();
 
-	// Go to the beginning of the version file
+    // Go to the beginning of the version file
     tempSqlFile->seek(0);
 
-	QTextStream in(tempSqlFile);
+    QTextStream in(tempSqlFile);
 
-	// Execute all sql command of the downloaded file
-	while (!in.atEnd()) {
-		line = in.readLine();
-		line = line.trimmed();
-		bytesRead += line.size();
-		// Exclude comments and empty lines
-		if (line != "" && !line.startsWith("//", Qt::CaseSensitive)) {
-			// Without error handling, because DROP-Statements are allowed to
-			// be invalid (there exist also a IF EXISTS statement in the SQLite
-			// library which suppresses an error, but it didn't work when I try it)
-			if (!query.exec(line) && !line.startsWith("drop", Qt::CaseInsensitive)) {
-				// Error message + failed sql string
-				ErrorMessage *errorMessage = new ErrorMessage(this);
-				errorMessage->showMessage(ERR_UPDATE_SQL_EXECUTION, TYPE_CRITICAL,
-					CANCEL_UPDATE, line);
-				return false;
-			}
-		}
-		updateDataReadProgress(bytesRead, totalBytes);
-	}
-	delete tempSqlFile;
-	updateDataReadProgress(totalBytes, totalBytes);
-	return true;
+    // Execute all sql command of the downloaded file
+    while (!in.atEnd()) {
+        line = in.readLine();
+        line = line.trimmed();
+        bytesRead += line.size();
+        // Exclude comments and empty lines
+        if (line != "" && !line.startsWith("//", Qt::CaseSensitive)) {
+            // Without error handling, because DROP-Statements are allowed to
+            // be invalid (there exist also a IF EXISTS statement in the SQLite
+            // library which suppresses an error, but it didn't work when I try it)
+            if (!query.exec(line) && !line.startsWith("drop", Qt::CaseInsensitive)) {
+                // Error message + failed sql string
+                ErrorMessage *errorMessage = new ErrorMessage(this);
+                errorMessage->showMessage(ERR_UPDATE_SQL_EXECUTION, TYPE_CRITICAL,
+                    CANCEL_UPDATE, line);
+                return false;
+            }
+        }
+        updateDataReadProgress(bytesRead, totalBytes);
+    }
+    delete tempSqlFile;
+    updateDataReadProgress(totalBytes, totalBytes);
+    return true;
 }
 
 void UpdateDialog::readSettings() {
-	#if APP_PORTABLE
-	QSettings settings(QCoreApplication::applicationDirPath() +
-    	"/portable/settings.ini", QSettings::IniFormat);
+    #if APP_PORTABLE
+    QSettings settings(QCoreApplication::applicationDirPath() +
+        "/portable/settings.ini", QSettings::IniFormat);
     #else
-	QSettings settings;
-	#endif
-	settings.beginGroup("proxy");
-	checkProxy->setChecked(settings.value("check_proxy", false).toBool());
-	txtProxyServer->setText(settings.value("proxy_server", "").toString());
-	txtProxyPort->setText(settings.value("proxy_port", "").toString());
-	settings.endGroup();
-	// Show proxy settings if proxy is checked
+    QSettings settings;
+    #endif
+    settings.beginGroup("proxy");
+    checkProxy->setChecked(settings.value("check_proxy", false).toBool());
+    txtProxyServer->setText(settings.value("proxy_server", "").toString());
+    txtProxyPort->setText(settings.value("proxy_port", "").toString());
+    settings.endGroup();
+    // Show proxy settings if proxy is checked
     if (checkProxy->isChecked()) {
-	    labelProxyServer->setVisible(true);
-	    txtProxyServer->setVisible(true);
-	    labelProxyPort->setVisible(true);
-   		txtProxyPort->setVisible(true);
-	}
+        labelProxyServer->setVisible(true);
+        txtProxyServer->setVisible(true);
+        labelProxyPort->setVisible(true);
+           txtProxyPort->setVisible(true);
+    }
 }
 
 void UpdateDialog::writeSettings() {
-	#if APP_PORTABLE
-	QSettings settings(QCoreApplication::applicationDirPath() +
-    	"/portable/settings.ini", QSettings::IniFormat);
+    #if APP_PORTABLE
+    QSettings settings(QCoreApplication::applicationDirPath() +
+        "/portable/settings.ini", QSettings::IniFormat);
     #else
-	QSettings settings;
-	#endif
-	settings.beginGroup("proxy");
-	settings.setValue("check_proxy", checkProxy->isChecked());
-	settings.setValue("proxy_server", txtProxyServer->text());
-	settings.setValue("proxy_port", txtProxyPort->text());
-	settings.endGroup();
+    QSettings settings;
+    #endif
+    settings.beginGroup("proxy");
+    settings.setValue("check_proxy", checkProxy->isChecked());
+    settings.setValue("proxy_server", txtProxyServer->text());
+    settings.setValue("proxy_port", txtProxyPort->text());
+    settings.endGroup();
 }

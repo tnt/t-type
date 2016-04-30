@@ -75,9 +75,9 @@ void CheckVersion::readResponseHeader(const QHttpResponseHeader
 
 void CheckVersion::httpDownloadFinished(bool error)
 {
-	// Download finished
+    // Download finished
     if (error) {
-		return;
+        return;
     }
 
     if (checkVersionFile()) {
@@ -89,31 +89,31 @@ void CheckVersion::httpDownloadFinished(bool error)
 
 bool CheckVersion::checkVersionFile()
 {
-	// Go to the beginning of the version file
+    // Go to the beginning of the version file
     tempVersionFile->seek(0);
 
-	QSqlQuery query;
-	QTextStream in(tempVersionFile);
-	// Read only the first line (server DB version)
-	QString updateVersion = in.readLine();
+    QSqlQuery query;
+    QTextStream in(tempVersionFile);
+    // Read only the first line (server DB version)
+    QString updateVersion = in.readLine();
 
     if (updateVersion.isNull()) {
 
         return false;
 
-	} else {
-		// Check DB version of software
+    } else {
+        // Check DB version of software
         if (!query.exec("SELECT * FROM db_version ORDER BY version DESC;")) {
 
-			return false;
+            return false;
 
-		} else {
+        } else {
 
             if (!query.first()) {
 
-				return false;
+                return false;
 
-			} else {
+            } else {
                 // Server DB version is 0 or bigger than current version
                 QString softwareVersion = query.value(0).toString();
 
@@ -122,10 +122,10 @@ bool CheckVersion::checkVersionFile()
 
                     return true;
                 }
-			}
-		}
+            }
+        }
     }
 
-	return false;
+    return false;
 
 }
