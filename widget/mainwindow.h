@@ -215,6 +215,9 @@ class MainWindow : public QMainWindow {
 
         //! Reads the postition and size of the main window.
         void readSettings();
+        
+        //! Restores the saved position (extracted from the above "readSettings" method)
+        void restoreStoredGeometry();
 
     private:
 

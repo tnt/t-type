@@ -344,7 +344,7 @@ void MainWindow::createStart() {
     connect(startWidget, SIGNAL(trainingClicked(int, int, QString)),
         this, SLOT(toggleStartToTraining(int, int, QString)));
     if (!isMaximized() && height() < APP_HEIGHT_STANDARD) {
-        resize(APP_WIDTH_STANDARD, APP_HEIGHT_STANDARD);
+        restoreStoredGeometry();
     }
     setMinimumSize(APP_WIDTH_STANDARD, APP_HEIGHT_STANDARD);
 }
@@ -474,6 +474,34 @@ void MainWindow::readSettings() {
     QSettings settings;
     #endif
 
+    settings.beginGroup("general");
+    if (settings.value("check_new_version", true).toBool()) {
+
+        QDate lastVersionCheck = settings.value("last_version_check").toDate();
+        QDate today = QDate::currentDate();
+
+        if (!lastVersionCheck.isValid() ||
+            lastVersionCheck.addDays(7) < today) {
+            CheckVersion *checkVersion = new CheckVersion();
+            connect(checkVersion, SIGNAL(newVersionAvailable()), this, SLOT(newVersionAvailable()));
+            checkVersion->checkVersion();
+        }
+        settings.setValue("last_version_check", today);
+    }
+    settings.endGroup();
+    
+    restoreStoredGeometry();
+}
+
+void MainWindow::restoreStoredGeometry() {
+    
+    #if APP_PORTABLE
+    QSettings settings(QCoreApplication::applicationDirPath() +
+        "/portable/settings.ini", QSettings::IniFormat);
+    #else
+    QSettings settings;
+    #endif
+
     settings.beginGroup("mainwindow");
     #if APP_WIN
     QByteArray storedGeometry;
@@ -490,21 +518,6 @@ void MainWindow::readSettings() {
     #endif
     settings.endGroup();
 
-    settings.beginGroup("general");
-    if (settings.value("check_new_version", true).toBool()) {
-
-        QDate lastVersionCheck = settings.value("last_version_check").toDate();
-        QDate today = QDate::currentDate();
-
-        if (!lastVersionCheck.isValid() ||
-            lastVersionCheck.addDays(7) < today) {
-            CheckVersion *checkVersion = new CheckVersion();
-            connect(checkVersion, SIGNAL(newVersionAvailable()), this, SLOT(newVersionAvailable()));
-            checkVersion->checkVersion();
-        }
-        settings.setValue("last_version_check", today);
-    }
-    settings.endGroup();
 }
 
 void MainWindow::writeSettings() {
