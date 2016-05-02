@@ -471,7 +471,7 @@ void StartWidget::createLayout() {
 void StartWidget::createConnections() {
     // Widget connections
     connect(buttonTraining, SIGNAL(clicked()), this, SLOT(clickTraining()));
-    connect(buttonExit, SIGNAL(clicked()), qApp, SLOT(quit()));
+    connect(buttonExit, SIGNAL(clicked()), parent(), SLOT(close()));
     connect(buttonHelp, SIGNAL(clicked()), this, SLOT(showHelp()));
 
     connect(radioLimitTime, SIGNAL(clicked()), this, SLOT(toggleLimit()));

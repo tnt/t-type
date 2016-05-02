@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include <QMenu>
 #include <QStackedWidget>
 #include <QString>
+#include <QSettings>
 #include <QList>
 #include <QChar>
 
@@ -210,14 +211,13 @@ class MainWindow : public QMainWindow {
         */
         void closeEvent(QCloseEvent *event);
 
+        void resizeEvent(QResizeEvent* event);
+
         //! Writes the postition and size of the main window to hard disk.
         void writeSettings();
 
         //! Reads the postition and size of the main window.
         void readSettings();
-        
-        //! Restores the saved position (extracted from the above "readSettings" method)
-        void restoreStoredGeometry();
 
     private:
 
@@ -318,6 +318,13 @@ class MainWindow : public QMainWindow {
             @see AbcRainWidget
         */
         void deleteAbcrain();
+
+        void setGeometrySettings();
+
+        void saveGeometrySettings();
+
+        QByteArray startWidgetGeometry;
+        QByteArray evaluationWidgetGeometry;
 
         //! Flag, training is started.
         bool trainingStarted;

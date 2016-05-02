@@ -55,6 +55,7 @@ MainWindow::MainWindow() {
 
     createWidgets();
 
+    setGeometrySettings();
     createStart();
     startWidget->fillLessonList(false);
     selectedLesson = -1;
@@ -114,6 +115,8 @@ void MainWindow::closeEvent(QCloseEvent *event) {
                 break;
         }
     }
+
+    saveGeometrySettings();
 }
 
 bool MainWindow::checkLicenseKey(QString licenseKey) {
@@ -343,8 +346,8 @@ void MainWindow::createStart() {
     stackedWidget->setCurrentWidget(startWidget);
     connect(startWidget, SIGNAL(trainingClicked(int, int, QString)),
         this, SLOT(toggleStartToTraining(int, int, QString)));
-    if (!isMaximized() && height() < APP_HEIGHT_STANDARD) {
-        restoreStoredGeometry();
+    if (!isMaximized()) {
+        restoreGeometry(startWidgetGeometry);
     }
     setMinimumSize(APP_WIDTH_STANDARD, APP_HEIGHT_STANDARD);
 }
@@ -391,8 +394,8 @@ void MainWindow::createEvaluation(int row, int type, QList<QChar> charList,
     stackedWidget->setCurrentWidget(evaluationWidget);
     connect(evaluationWidget, SIGNAL(readyClicked()),
         this, SLOT(toggleEvaluationToStart()));
-    if (!isMaximized() && height() < APP_HEIGHT_STANDARD) {
-        resize(APP_WIDTH_STANDARD, APP_HEIGHT_STANDARD);
+    if (!isMaximized()) {
+        restoreGeometry(evaluationWidgetGeometry);
     }
     setMinimumSize(APP_WIDTH_STANDARD, APP_HEIGHT_STANDARD);
 }
@@ -489,35 +492,50 @@ void MainWindow::readSettings() {
         settings.setValue("last_version_check", today);
     }
     settings.endGroup();
-    
-    restoreStoredGeometry();
 }
 
-void MainWindow::restoreStoredGeometry() {
-    
-    #if APP_PORTABLE
-    QSettings settings(QCoreApplication::applicationDirPath() +
-        "/portable/settings.ini", QSettings::IniFormat);
-    #else
-    QSettings settings;
-    #endif
+void MainWindow::setGeometrySettings() {
 
-    settings.beginGroup("mainwindow");
-    #if APP_WIN
-    QByteArray storedGeometry;
-    storedGeometry = settings.value("geometry").toByteArray();
-    if (storedGeometry.isEmpty() || storedGeometry.isNull()) {
+    QSettings settings;
+
+    settings.beginGroup("geometry");
+
+    startWidgetGeometry = settings.value("startWidget").toByteArray();
+    if (startWidgetGeometry.isEmpty() || startWidgetGeometry.isNull()) {
         resize(QSize(APP_WIDTH_STANDARD, APP_HEIGHT_STANDARD));
         move(QPoint(100, 100));
+        startWidgetGeometry = saveGeometry();
     } else {
-        restoreGeometry(storedGeometry);
+        restoreGeometry(startWidgetGeometry);
     }
-    #else
-    resize(settings.value("size", QSize(APP_WIDTH_STANDARD, APP_HEIGHT_STANDARD)).toSize());
-    move(settings.value("pos", QPoint(100, 100)).toPoint());
-    #endif
-    settings.endGroup();
 
+    evaluationWidgetGeometry = settings.value("evaluationWidget").toByteArray();
+    if (evaluationWidgetGeometry.isEmpty() || evaluationWidgetGeometry.isNull()) {
+        evaluationWidgetGeometry = startWidgetGeometry;
+    }
+
+    settings.endGroup();
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event) {
+
+    if (stackedWidget->currentWidget() == startWidget){
+        startWidgetGeometry = saveGeometry();
+    } else if (stackedWidget->currentWidget() == evaluationWidget){
+        evaluationWidgetGeometry = saveGeometry();
+    }
+}
+
+void MainWindow::saveGeometrySettings() {
+
+    QSettings settings;
+
+    settings.beginGroup("geometry");
+
+    settings.setValue("startWidget", startWidgetGeometry);
+    settings.setValue("evaluationWidget", evaluationWidgetGeometry);
+
+    settings.endGroup();
 }
 
 void MainWindow::writeSettings() {
