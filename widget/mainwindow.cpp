@@ -518,6 +518,14 @@ void MainWindow::setGeometrySettings() {
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
+    changeGeometry();
+}
+
+void MainWindow::moveEvent(QMoveEvent* event) {
+    changeGeometry();
+}
+
+void MainWindow::changeGeometry() {
 
     if (stackedWidget->currentWidget() == startWidget){
         startWidgetGeometry = saveGeometry();

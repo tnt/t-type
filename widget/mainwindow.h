@@ -212,6 +212,9 @@ class MainWindow : public QMainWindow {
         void closeEvent(QCloseEvent *event);
 
         void resizeEvent(QResizeEvent* event);
+        void moveEvent(QMoveEvent* event);
+
+        void changeGeometry();
 
         //! Writes the postition and size of the main window to hard disk.
         void writeSettings();
