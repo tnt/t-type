@@ -41,7 +41,6 @@ HEADERS += def/defines.h \
            widget/progressionwidget.h \
            widget/regexpdialog.h \
            widget/settingsdialog.h \
-#           widget/settingsdialogx.h \
            widget/settingspages.h \
            widget/startwidget.h \
            widget/statusbar.h \
@@ -76,7 +75,6 @@ SOURCES += main.cpp \
            widget/progressionwidget.cpp \
            widget/regexpdialog.cpp \
            widget/settingsdialog.cpp \
- #          widget/settingsdialogx.cpp \
            widget/settingspages.cpp \
            widget/startwidget.cpp \
            widget/statusbar.cpp \
