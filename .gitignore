@@ -1,7 +1,11 @@
 nbproject/*
+debug
 *.o
 *.core
 moc_*.cpp
 qrc_tipp10.cpp
 tipp10
-tipp10.pro
+Makefile
+Makefile.*
+object_script.*
+*.cbp

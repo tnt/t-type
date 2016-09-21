@@ -28,14 +28,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #define STARTSQL_H
 
 #include <QListWidget>
-#include <QList>
-#include <QString>
+//#include <QList>
+//#include <QString>
 #include <QComboBox>
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QProgressBar>
 #include <QRadioButton>
-#include <QString>
 
 //! The StartSql class fills a list widget and resets user data .
 /*!
