@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = tipp
+TARGET = tipp10
 DEPENDPATH += . def games sql widget
 INCLUDEPATH += .
 QT += gui

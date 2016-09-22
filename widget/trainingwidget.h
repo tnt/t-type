@@ -129,6 +129,9 @@ class TrainingWidget : public QWidget {
         //! Slot, updates the text of the status bar over the database class.
         void updateStatusText(QString statustext);
 
+        // update display of the last typed characters
+        void updateErrorChars(QChar newChar);
+
     private slots:
 
         //! Slot, updates the time counter.
@@ -166,7 +169,7 @@ class TrainingWidget : public QWidget {
 
         //! Reads all user settings.
         void readSettings();
-
+        
         //! Object of the help browser dialog
         HelpBrowser *helpBrowser;
 
@@ -209,6 +212,8 @@ class TrainingWidget : public QWidget {
         QString opSystem;
         QSound *bells;
         QSound *metronomeSound;
+        
+        QString errorChars;
 
         QList<QChar> charList;
         QList<int> mistakeList;

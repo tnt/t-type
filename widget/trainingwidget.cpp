@@ -33,6 +33,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include <QVariant>
 #include <QCoreApplication>
 
+#include <QtDebug>
+
 #include "trainingwidget.h"
 #include "def/errordefines.h"
 #include "errormessage.h"
@@ -203,6 +205,8 @@ void TrainingWidget::createConnections() {
     // Incoming connection from KeyBoard object
     connect(tickerBoard, SIGNAL(keyPressed(QChar)), this, SLOT(setKey(QChar)));
     //connect(tickerBoard, SIGNAL(isReady()), this, SLOT(exitTraining()));
+    connect(tickerBoard, SIGNAL(keyPressed(QChar)), this,
+        SLOT(updateErrorChars(QChar)));
     // Button connections
     connect(buttonPause, SIGNAL(clicked()), this, SLOT(pauseSession()));
     connect(buttonPause, SIGNAL(clicked()), tickerBoard, SLOT(pauseTicker()));
@@ -390,10 +394,10 @@ void TrainingWidget::setKey(QChar key) {
             // Check if correct key was pressed OR
             // key was enter and a line break was required
             // (char and unicode then are different)
-            if (key == currentChar || ((key.unicode() == 13 || key.unicode() == 3) &&
-                currentChar == QChar(TOKEN_NEW_LINE)) ||
-                (key.unicode() == 9 &&
-                currentChar == QChar(TOKEN_TAB))) {
+            if (key == currentChar
+                    || ((key.unicode() == 13 || key.unicode() == 3) && currentChar == QChar(TOKEN_NEW_LINE))
+                    || (key.unicode() == 9 && currentChar == QChar(TOKEN_TAB))
+               ) {
                 //currentChar.unicode() == 182)) {
                 // Correct key was pressed
                 oneErrorFlag = false;
@@ -538,6 +542,11 @@ void TrainingWidget::updateStatusValues() {
 }
 
 void TrainingWidget::updateStatusText(QString statustext) {
+
+    if (oneErrorFlag){
+        return;
+    }
+
     if (!showStatusInformation) {
         statustext = "";
     }
@@ -667,5 +676,25 @@ void TrainingWidget::readSettings() {
         lessonUnit = trainingSql->getLessonUnit(currentLesson, currentType);
     } else {
         lessonUnit = 0;
+    }
+}
+
+void TrainingWidget::updateErrorChars(QChar newChar) {
+
+    bool backspace;
+
+    if (newChar.unicode() == 8){
+        newChar = QChar(8656);
+        backspace = true;
+    }
+
+    if (oneErrorFlag){
+        errorChars.append(newChar);
+        statusBar->setCenterText(errorChars);
+    } else {
+        errorChars = QString("");
+        if (backspace){
+            statusBar->setCenterText(QString(""));
+        }
     }
 }
