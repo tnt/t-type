@@ -62,7 +62,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #define NUM_INTELLIGENT_QUERYS         2
 #define TOKEN_NEW_LINE                 0x00b6
 #define TOKEN_TAB                    0x2192
-#define TOKEN_BACKSPACE                0x00b9 //0x00ac
+#define TOKEN_BACKSPACE                0x26A0
 
 // Constants for dynamic training
 #define NUM_TEXT_UNTIL_REPEAT         10

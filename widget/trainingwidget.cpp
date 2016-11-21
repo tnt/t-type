@@ -492,7 +492,7 @@ void TrainingWidget::secondsUpdate() {
         currentSeconds++;
         if ((limitType == 0 && limitValue <= (currentSeconds / 60)) ||
             (limitType == 1 && limitValue <= currentChars) ||
-            limitType == 2 && (counterChars + 1) <= currentChars) {
+            (limitType == 2 && (counterChars + 1) <= currentChars)) {
             exitTraining();
         } else {
             updateStatusValues();
@@ -682,6 +682,8 @@ void TrainingWidget::readSettings() {
 void TrainingWidget::updateErrorChars(QChar newChar) {
 
     bool backspace;
+    
+//    QTextStream(stdout) << "newChar: '" << QChar(newChar) << "'\n";
 
     if (newChar.unicode() == 8){
         newChar = QChar(8656);

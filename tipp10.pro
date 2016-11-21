@@ -6,6 +6,7 @@ QT += gui
 QT += core
 QT += sql network
 CONFIG += qt
+CONFIG += console
 
 QMAKE_CFLAGS = -fpermissive
 QMAKE_CXXFLAGS = -fpermissive
