@@ -63,6 +63,8 @@ int main(int argc, char *argv[]) {
     settings.beginGroup("general");
     QString languageGui = settings.value("language_gui",
         QLocale::system().name()).toString();
+    
+    QLocale::setDefault(QLocale(languageGui));
 
     QStringList languagesGui =
         QString(APP_EXISTING_LANGUAGES_GUI).split(";", QString::SkipEmptyParts);

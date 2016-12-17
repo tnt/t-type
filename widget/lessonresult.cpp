@@ -227,9 +227,7 @@ void LessonResult::createOutput() {
         }
         lessonTokenLen = query.value(3).toString();
         lessonErrorNum = query.value(4).toString();
-        double lessonRateTemp = query.value(8).toDouble();
-        lessonRate.sprintf("%.0f", lessonRateTemp);
-        lessonRate.append(" %");
+        lessonRate = QString("%L1 %").arg(query.value(8).toDouble(), 0, 'g', 2);
         double lessonCpmTemp = query.value(5).toDouble();
         lessonCpm.sprintf("%.0f", lessonCpmTemp);
         double lessonGradeTemp;
@@ -583,9 +581,7 @@ void LessonResult::createPrintOutput() {
         }
         lessonTokenLen = query.value(3).toString();
         lessonErrorNum = query.value(4).toString();
-        double lessonRateTemp = query.value(8).toDouble();
-        lessonRate.sprintf("%.0f", lessonRateTemp);
-        lessonRate.append(" %");
+        lessonRate = QString("%L1 %").arg(query.value(8).toDouble(), 0, 'g', 2);
         double lessonCpmTemp = query.value(5).toDouble();
         lessonCpm.sprintf("%.0f", lessonCpmTemp);
         double lessonGradeTemp;

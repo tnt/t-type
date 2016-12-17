@@ -79,8 +79,6 @@ QVariant LessonSqlModel::data(const QModelIndex &index, int role) const {
     double timeMin;
     double lessonCpm;
     QString lessonCpmString;
-    double lessonRate;
-    QString lessonRateString;
     static int coloredRow = -1;
     QString lessonName;
     if (value.isValid() && role == Qt::DisplayRole) {
@@ -106,10 +104,7 @@ QVariant LessonSqlModel::data(const QModelIndex &index, int role) const {
         }
         if (index.column() == 5) {
             // Rate
-            lessonRate = value.toDouble();
-
-            lessonRateString.sprintf("%.0f", lessonRate);
-            return lessonRateString + " %";;
+            return QString("%L1 %").arg(value.toDouble(), 0, 'g', 2);
         }
         if (index.column() == 6) {
             // There is never grade smaller than zero
